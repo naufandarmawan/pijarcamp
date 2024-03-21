@@ -15,6 +15,7 @@
 // Output:
 // [“Alexandra”,”Amanda”,”Angela”]
 
+// 1. Membuat variabel name yang berisi kumpulan nama sesuai soal
 const name = [
     "Abigail", "Alexandra", "Alison",
     "Amanda", "Angela", "Bella",
@@ -23,12 +24,15 @@ const name = [
     "Ella", "Faith", "Olivia", "Penelope"
 ];
 
-const printHasil = (daftarNama)=>{
+// 2. Membuat function printHasil yang akan dimasukkan 
+// ke parameter dari searchName sebagai callback untuk menampilkan output
+const printHasil = (daftarNama) => {
     console.log(daftarNama);
 }
 
+// 3. membuat function utama untuk searching nama
 const searchName = (keyword, limit, callback) => {
-    const hasil = name.filter((nama)=>nama.toLowerCase().includes(keyword.toLowerCase())).slice(0,limit)
+    const hasil = name.filter((nama) => nama.toLowerCase().includes(keyword.toLowerCase())).slice(0, limit)
     callback(hasil)
 }
 

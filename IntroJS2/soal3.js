@@ -25,18 +25,22 @@
 // “Nilai tidak ditemukan”
 
 const seleksiNilai = (nilaiAwal, nilaiAkhir, dataArray) => {
-    if(nilaiAwal > nilaiAkhir){
+    // pengecekan pertama ( nilaiAkhir > nilaiAwal)
+    if (nilaiAwal > nilaiAkhir) {
         console.log('Nilai akhir harus lebih besar dari nilai awal');
+        // pengecekan kedua (jumlah data dalam array > 5)
     } else if (dataArray.length <= 5) {
         console.log('Jumlah angka dalam dataArray harus lebih dari 5');
     } else {
-        const hasil = dataArray.sort((a,b)=>a-b).filter((angka)=>angka > nilaiAwal && angka < nilaiAkhir)
-        if(hasil.length === 0){
+        // Fungsi mencari data
+        const hasil = dataArray.sort((a, b) => a - b).filter((angka) => angka > nilaiAwal && angka < nilaiAkhir)
+        // pengeckan ketiga (apakah nilai ditemukan atau tidak)
+        if (hasil.length === 0) {
             console.log('Nilai tidak ditemukan');
         } else {
             console.log(hasil);
         }
-    } 
+    }
 }
 
 seleksiNilai(5, 20, [2, 25, 4, 14, 17, 30, 8]);
