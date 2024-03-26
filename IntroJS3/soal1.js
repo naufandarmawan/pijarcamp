@@ -19,21 +19,21 @@ const cekHariKerja = (day) => { // Mendefinisikan fungsi cekHariKerja dengan par
     })
 }
 
-// penggunaan then catch 
+// Penggunaan then catch 
 // cara untuk menangani hasil yang dikembalikan oleh promise. 
 // then digunakan untuk menangkap hasil yang dikembalikan oleh promise saat resolve terpenuhi,
 // sedangkan catch digunakan untuk menangkap error yang terjadi saat reject terpenuhi.
 
 cekHariKerja('senin') // Memanggil fungsi cekHariKerja dengan parameter 'senin'.
-.then((res)=>{ // Menggunakan then untuk menangani hasil dari promise jika berhasil.
-    console.log(`${res} adalah hari kerja`); // Mencetak hasil (hari kerja) ke konsol.
+.then((result)=>{ // Menggunakan then untuk menangani hasil dari promise jika berhasil.
+    console.log(`${result} adalah hari kerja`); // Mencetak hasil (hari kerja) ke konsol.
 })
-.catch((err)=>{ // Menggunakan catch untuk menangani error jika promise ditolak.
-    console.log(err.message); // Mencetak pesan error ke konsol.
+.catch((error)=>{ // Menggunakan catch untuk menangani error jika promise ditolak.
+    console.log(error.message); // Mencetak pesan error ke konsol.
 })
 
 
-// penggunaan try catch
+// Penggunaan try catch
 // menangani error dalam eksekusi kode asynchronous dengan await.
 // Jika pemanggilan fungsi cekHariKerja mengembalikan hasil tanpa kesalahan, hasilnya ditangkap oleh variabel res.
 // Jika terjadi kesalahan, blok catch akan menangkap kesalahan tersebut dan menampilkan pesan kesalahan yang sesuai.
@@ -41,7 +41,7 @@ cekHariKerja('senin') // Memanggil fungsi cekHariKerja dengan parameter 'senin'.
 const dayCheck = async () => { // Mendefinisikan fungsi asynchronous dayCheck.
     try { // Mencoba menjalankan blok kode di dalamnya.
         const res = await cekHariKerja('sabtu') // Menunggu hasil dari promise cekHariKerja dengan parameter 'sabtu'.
-        console.log(`${res} adalah hari kerja`); // Mencetak hasil (hari kerja) ke konsol jika promise berhasil.
+        console.log(res); // Mencetak hasil (hari kerja) ke konsol jika promise berhasil.
     } catch (err) { // Menangkap error jika terjadi kesalahan dalam blok try.
         console.log(err.message); // Mencetak pesan error ke konsol.
     }

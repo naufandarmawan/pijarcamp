@@ -34,15 +34,13 @@
 const PijarFood = (harga, voucher, jarak, pajak) => {
     
     // Sistem voucher
-    let discount = 0 // inisialisasi variabel baru dengan default value 0
+    let discount = 0
     // pengecekan voucher yang digunakan
     if (voucher == 'PIJARFOOD5' && harga >= 50000) {
         discount = Math.min(harga * 50/100, 50000)
     } else if (voucher == 'DITRAKTIRPIJAR' && harga >= 25000) {
         discount = Math.min(harga * 60/100, 30000)
-    } else {
-        discount = 0
-    } 
+    }
     
     // Sistem ongkir
     let deliveryCost = 0
