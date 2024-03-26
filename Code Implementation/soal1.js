@@ -10,7 +10,7 @@
 // belajar Saya”
 
 
-// Deteksi Palindrome
+// Deteksi Palindrom
 const isPalindrome = (text) => {
     // 1. Membuat teks menjadi lowercase
     const cleanedText = text.toLowerCase()

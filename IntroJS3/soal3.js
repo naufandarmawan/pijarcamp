@@ -3,11 +3,9 @@
 // Program 1: Validasi Login (then-catch)
 // Mendefinisikan fungsi validateForm dengan parameter username, nama, email, dan password
 const validateForm = (username, nama, email, password) => {
-    // Mengembalikan Promise baru dengan dua parameter: resolve dan reject
-    return new Promise((resolve, reject) => { 
+    return new Promise((resolve, reject) => { // Membuat sebuah promise baru.
         if (!username) { // Memeriksa apakah parameter username tidak terisi
-            reject('Kolom username belum terisi.'); 
-            // Jika tidak terisi, reject dengan pesan "Kolom username belum terisi."
+            reject('Kolom username belum terisi.'); // Jika tidak terisi, reject dengan pesan terkait
         }
         if (!nama) { // Memeriksa apakah parameter nama tidak terisi
             reject('Kolom nama belum terisi.');

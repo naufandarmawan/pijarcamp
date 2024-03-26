@@ -34,38 +34,41 @@
 const PijarFood = (harga, voucher, jarak, pajak) => {
     
     // Sistem voucher
-    let potongan = 0
+    let discount = 0 // inisialisasi variabel baru dengan default value 0
+    // pengecekan voucher yang digunakan
     if (voucher == 'PIJARFOOD5' && harga >= 50000) {
-        potongan = Math.min(harga * 50/100, 50000)
+        discount = Math.min(harga * 50/100, 50000)
     } else if (voucher == 'DITRAKTIRPIJAR' && harga >= 25000) {
-        potongan = Math.min(harga * 60/100, 30000)
+        discount = Math.min(harga * 60/100, 30000)
     } else {
-        potongan = 0
+        discount = 0
     } 
     
     // Sistem ongkir
-    let biayaAntar = 0
+    let deliveryCost = 0
+    // perhitungan biaya ongkir berdasarkan jarak
     if (jarak <= 2) {
-        biayaAntar = 5000
+        deliveryCost = 5000
     } else {
-        biayaAntar = 5000 + ((jarak - 2) * 3000)
+        deliveryCost = 5000 + ((Math.ceil(jarak - 2)) * 3000)
     }
 
     // Sistem pajak
-    let nilaiPajak = 0
+    let taxAmount = 0
+    // Pengecekan apa bila ada pajak, maka pajak dihitung
     if (pajak) {
-        nilaiPajak = 5/100 *  harga
+        taxAmount = 5/100 *  harga
     }
 
     // Total biaya
-    let subTotal = harga - potongan + biayaAntar + nilaiPajak
+    let subTotal = harga - discount + deliveryCost + taxAmount
 
     // Tampilkan rincian biaya
     console.log(`
     Harga : ${harga}
-    Potongan : ${potongan}
-    Biaya Antar : ${biayaAntar}
-    Pajak : ${nilaiPajak}
+    Potongan : ${discount}
+    Biaya Antar : ${deliveryCost}
+    Pajak : ${taxAmount}
     Subtotal : ${subTotal}`);
 }
 
