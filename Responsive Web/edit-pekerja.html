@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/edit-pekerja.css">
+</head>
+
+<body>
+    <nav>
+        <img src="./assets/images/purple-logo.svg" alt="">
+        <div class="nav-cta">
+            <div class="nav-icon">
+                <img src="./assets/images/grey-bell.svg" alt="">
+                <img src="./assets/images/grey-mail.svg" alt="">
+            </div>
+            <img src="./assets/images/profile.png" alt="">
+            <!-- 
+                <div class="nav-button">
+                <button>Masuk</button>
+                <button class="primary">Daftar</button>
+                </div> 
+            -->
+        </div>
+    </nav>
+    <header></header>
+    <main>
+        <div class="left-column">
+            <div class="profile">
+                <div class="profile-content">
+                    <div class="profile-img">
+                        <img src="./assets/images/person-3.png" alt="">
+                        <div class="profile-edit">
+                            <img src="./assets/images/grey-edit.svg" alt="">
+                            <p>Edit</p>
+                        </div>
+                    </div>
+                    <div class="profile-title">
+                        <h3>Louis Tomlinson</h3>
+                        <div class="profile-info">
+                            <p class="profile-work">Web Developer</p>
+                            <div class="profile-location">
+                                <img src="./assets/images/grey-pin.svg" alt="">
+                                <p>Purwokerto, Jawa Tengah</p>
+                            </div>
+                            <p>Freelancer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-button">
+                <button>Simpan</button>
+                <button class="secondary">Batal</button>
+            </div>
+
+        </div>
+        <div class="right-column">
+            <form>
+                <div id="form-profile" class="form-container">
+                    <h3>Data diri</h3>
+                    <div style="height: 2px;background-color: #C4C4C4;"></div>
+                    <div class="form-input">
+                        <div class="form-item">
+                            <label for="fullname">Nama lengkap</label>
+                            <input id="fullname" type="text" placeholder="Masukan nama lengkap">
+                        </div>
+                        <div class="form-item">
+                            <label for="job-desc">Job desk</label>
+                            <input id="job-desc" type="text" placeholder="Masukan job desk">
+                        </div>
+                        <div class="form-item">
+                            <label for="location">Domisili</label>
+                            <input id="location" type="text" placeholder="Masukan domisili">
+                        </div>
+                        <div class="form-item">
+                            <label for="workplace">Tempat kerja</label>
+                            <input id="workplace" type="text" placeholder="Masukan tempat kerja">
+                        </div>
+                        <div class="form-item">
+                            <label for="profile-desc">Deskripsi singkat</label>
+                            <textarea id="profile-desc" placeholder="Tuliskan deskripsi singkat"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div id="form-skill" class="form-container">
+                    <h3>Skill</h3>
+                    <div style="height: 2px;background-color: #C4C4C4;"></div>
+                    <div class="form-input">
+                        <div class="form-item column">
+                            <input id="code-language" type="text" placeholder="Java">
+                            <button>Simpan</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="form-experience" class="form-container">
+                    <h3>Pengalaman kerja</h3>
+                    <div style="height: 2px;background-color: #C4C4C4;"></div>
+                    <div class="form-input">
+                        <div class="form-item">
+                            <label for="position">Posisi</label>
+                            <input id="position" type="text" placeholder="web developer">
+                        </div>
+                        <div class="form-column">
+                            <div class="form-item">
+                                <label for="job-desc">Nama perusahaan</label>
+                                <input id="job-desc" type="text" placeholder="PT Harus bisa">
+                            </div>
+                            <div class="form-item">
+                                <label for="location">Bulan/tahun</label>
+                                <input id="location" type="text" placeholder="Januari 2018">
+                            </div>
+                        </div>
+                        <div class="form-item">
+                            <label for="experience-desc">Deskripsi singkat</label>
+                            <textarea id="experience-desc" placeholder="Deskripsikan pekerjaan anda"></textarea>
+                        </div>
+                        <div style="height: 2px;background-color: #E2E5ED;"></div>
+                        <button>Tambah pengalaman kerja</button>
+                    </div>
+                </div>
+                <div id="form-portfolio" class="form-container">
+                    <h3>Portofolio</h3>
+                    <div style="height: 2px;background-color: #C4C4C4;"></div>
+                    <div class="form-input">
+                        <div class="form-item">
+                            <label for="app-name">Nama aplikasi</label>
+                            <input id="app-name" type="text" placeholder="Masukan nama aplikasi">
+                        </div>
+                        <div class="form-item">
+                            <label for="repository-url">Link repository</label>
+                            <input id="repository-url" type="text" placeholder="Masukan link repository">
+                        </div>
+                        <div class="form-item">
+                            <label for="portfolio-type">Type portofolio</label>
+                            <div class="portfolio-radio">
+                                <div class="radio-item primary">
+                                    <input type="radio" id="aplikasi-mobile" name="radio-item" value="Aplikasi mobile"
+                                        checked>
+                                    <label for="aplikasi-mobile">Aplikasi mobile</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input type="radio" id="aplikasi-web" name="radio-item" value="Aplikasi web">
+                                    <label for="aplikasi-web">Aplikasi web</label>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-item input">
+                            <label for="upload-file">Upload gambar
+                                <div class="file-input-placeholder">
+                                    <div class="main-placeholder">
+                                        <img src="./assets/images/grey-upload.svg" alt="">
+                                        <p class="primary">Drag & Drop untuk Upload Gambar Aplikasi Mobile</p>
+                                        <p>Atau cari untuk mengupload file dari direktorimu.</p>
+                                    </div>
+                                    <div class="additional-placeholder">
+                                        <div class="add-placeholder-item"><img src="./assets/images/grey-photo.svg"
+                                                alt="">
+                                            <p>High-Res Image PNG, JPG or GIF</p>
+                                        </div>
+                                        <div class="add-placeholder-item"><img src="./assets/images/grey-expand.svg"
+                                                alt="">
+                                            <p>Size 1080x1920 or 600x800</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </label>
+                            <input id="upload-file" type="file">
+                        </div>
+                        <div style="height: 2px;background-color: #E2E5ED;"></div>
+                        <button>Tambah portofolio</button>
+                    </div>
+                </div>
+            </form>
+    </main>
+    <footer>
+        <div class="company-desc">
+            <img src="./assets/images/white-logo.svg" alt="">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor.</p>
+        </div>
+        <div class="copyright">
+            <p>2020 Pewworld. All right reserved</p>
+            <div class="contact-us">
+                <a href="">Telepon</a>
+                <a href="">Email</a>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

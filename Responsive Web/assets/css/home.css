@@ -1,0 +1,453 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Open Sans", sans-serif;
+    /* background-color: transparent; */
+}
+
+html {
+    background-color: #F6F7F8;
+}
+
+button {
+    cursor: pointer;
+}
+
+.page-item {
+    cursor: pointer;
+}
+
+
+footer {
+    padding: 70px 150px 42px;
+    background-color: #5E50A1;
+    display: flex;
+    flex-direction: column;
+    gap: 67px;
+    color: #ffffff;
+}
+
+footer img {
+    width: 178px;
+    height: 50px;
+}
+
+footer .company-desc {
+    width: 381px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px
+}
+
+footer .company-desc p {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: #ffffff;
+}
+
+footer .copyright {
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #ffffff;
+    padding: 24px 0px 0px 0px;
+}
+
+footer .copyright .contact-us {
+    display: flex;
+    gap: 79px;
+    /* color: aliceblue; */
+}
+
+footer a {
+    text-decoration: none;
+    color: #ffffff
+}
+
+/* Header */
+header {
+    background-color: #5E50A1;
+    padding: 33px 150px;
+}
+
+header h1 {
+    font-weight: 700;
+    font-size: 28px;
+    line-height: 20px;
+    color: #ffffff;
+}
+
+/* Talent List */
+.talent-list {
+    border-radius: 8px;
+
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    box-shadow: 0px 1px 20px 0 rgba(197, 197, 197, 0.25);
+}
+
+.talent-card {
+    display: flex;
+    justify-content: space-between;
+    padding: 21px 77px 38px 20px;
+    align-items: center;
+}
+
+.talent-card button {
+    background-color: #5E50A1;
+    color: #ffffff;
+    padding: 17px 27px;
+    height: fit-content;
+    border: none;
+    border-radius: 4px;
+
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.talent-card-profile {
+    display: flex;
+    gap: 31px;
+    align-items: center;
+}
+
+.talent-card-img {
+    width: 100px;
+    height: 100px;
+}
+
+.talent-card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+}
+
+.talent-card-title h4 {
+    margin-bottom: -6px;
+
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 56px;
+    color: #1F2A36;
+}
+
+.talent-card-desc {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #9EA0A5;
+}
+
+.talent-card-location {
+    display: flex;
+    gap: 11px;
+    align-items: center;
+}
+
+.talent-card-location img {
+    width: 16px;
+    height: 16px;
+}
+
+.talent-card-skill {
+    display: flex;
+    gap: 10px
+}
+
+.talent-card-skill p {
+    padding: 4px 23px;
+    text-align: center;
+    border: 1px solid #FBB017;
+    background-color: rgba(251, 176, 23, 0.6);
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 20px;
+    color: #ffffff;
+
+}
+
+main {
+    padding: 50px 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.search {
+    display: flex;
+    justify-content: space-between;
+    border-radius: 8px;
+    background-color: #ffffff;
+    padding: 0px;
+    box-shadow: 0px 1px 20px 0 rgba(197, 197, 197, 0.25);
+}
+
+.search-input {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 25px 0px 0px;
+    width: 100%;
+    align-items: center;
+}
+
+.search-input input {
+    border: none;
+    width: 100%;
+    padding: 25px 0px 25px 20px;
+}
+
+.search-input input::placeholder {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20;
+    color: #9EA0A5;
+}
+
+.search-input img {
+    width: 24px;
+    height: 24px;
+}
+
+.search-submit {
+    display: flex;
+    padding: 8px 8px 8px 25px;
+    gap: 53px;
+    align-items: center;
+
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+    color: #9EA0A5;
+}
+
+.search-submit button {
+    background-color: #5E50A1;
+    color: #ffffff;
+    padding: 17px 34px;
+    height: fit-content;
+    border: none;
+    border-radius: 4px;
+
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.pagination {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+}
+
+.page-item {
+    background-color: #ffffff;
+    border: 1px solid #E2E5ED;
+    border-radius: 4px;
+    width: 58px;
+    height: 58px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 28px;
+    color: #9EA0A5;
+
+}
+
+.page-item.primary {
+    background-color: #5E50A1;
+    font-weight: 700;
+    color: #ffffff;
+
+}
+
+.page-item img {
+    width: 20px;
+    height: 20px;
+}
+
+nav {
+    display: flex;
+    padding: 33px 150px;
+    background-color: #ffffff;
+    justify-content: space-between;
+    align-items: center;
+}
+
+nav img {
+    width: 127px;
+    cursor: pointer;
+}
+
+.nav-cta {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.nav-cta img {
+    width: 32px;
+}
+
+.nav-icon {
+    display: flex;
+    gap: 40px;
+}
+
+.nav-icon img {
+    width: 24px;
+}
+
+.nav-button {
+    display: flex;
+    gap: 16px;
+}
+
+.nav-button button {
+    padding: 10px 20px;
+    border: 1px solid #5E50A1;
+    border-radius: 4px;
+    background-color: #ffffff;
+
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+    color: #5E50A1;
+}
+
+.nav-button button.primary {
+    background-color: #5E50A1;
+    color: #ffffff;
+}
+
+@media screen and (max-width:991.98px) {
+    nav {
+        padding: 24px;
+    }
+
+    header {
+        padding: 24px;
+    }
+
+    main {
+        padding: 48px;
+        gap: 24px;
+    }
+
+    .talent-card {
+        flex-direction: column;
+        justify-content: center;
+        padding: 34px;
+        gap: 20px;
+    }
+
+    .talent-card-profile {
+        flex-direction: column;
+        justify-content: center;
+        gap: 0px;
+    }
+
+    .talent-card-content {
+        justify-content: center;
+    }
+
+    .talent-card-title {
+        text-align: center;
+    }
+
+    .talent-card-location {
+        justify-content: center;
+    }
+
+    .page-item {
+        width: 40px;
+        height: 40px;
+    }
+
+    footer {
+        padding: 24px;
+    }
+
+    .search-submit {
+        display: none;
+    }
+
+    footer img {
+        height: 32px;
+        width: fit-content;
+    }
+
+    footer .company-desc p {
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width:575.98px) {
+    nav {
+        padding: 16px;
+        
+        img {
+            height: 32px;
+            width: fit-content;
+        }
+
+        .nav-icon {
+            gap: 6px;
+            display: none;
+        }
+
+        .nav-cta img {
+            width: auto;
+        }
+    }
+
+    header {
+        padding: 16px;
+
+        h1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+    }
+
+    main {
+        padding: 24px;
+        gap: 24px;
+    }
+
+    footer {
+        padding: 24px;
+    }
+
+    .talent-card-skill {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .page-item.secondary{
+        display: none;
+    }
+
+    footer .company-desc {
+        width: fit-content;
+    }
+
+    .copyright {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    footer .copyright .contact-us {
+        gap: 12px;
+    }
+}
