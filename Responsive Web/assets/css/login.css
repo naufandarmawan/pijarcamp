@@ -5,6 +5,10 @@
     /* box-sizing: content-box; */
 }
 
+input:focus {
+    outline: none;
+}
+
 html body {
 
     /* height: 100vh; */

@@ -5,6 +5,10 @@
     /* background-color: transparent; */
 }
 
+input:focus {
+    outline: none;
+}
+
 html {
     background-color: #F6F7F8;
 }
@@ -116,7 +120,13 @@ nav img {
 
 
 /* Header */
-header {
+/* header {
+    background-color: #5E50A1;
+    height: 361px;
+    margin-bottom: -361px;
+} */
+
+.header {
     background-color: #5E50A1;
     height: 361px;
     margin-bottom: -361px;

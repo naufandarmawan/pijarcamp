@@ -5,6 +5,10 @@
     /* background-color: transparent; */
 }
 
+input:focus {
+    outline: none;
+}
+
 html {
     background-color: #F6F7F8;
 }
@@ -342,6 +346,10 @@ nav img {
     main {
         padding: 48px;
         gap: 24px;
+    }
+
+    .divider {
+        display:none;
     }
 
     .talent-card {
