@@ -19,13 +19,22 @@ import api from '../../configs/api'
 import GreyEdit from '../../assets/grey-edit.svg'
 
 
-
-
 const ProfileTalent = () => {
   const { id } = useParams()
   const [profile, setProfile] = useState({})
+  const [myProfile, setMyProfile] = useState({})
 
   useEffect(() => {
+    api.get(`/workers/profile`)
+      .then((res) => {
+        const result = res.data.data
+        console.log(result);
+        setMyProfile(result)
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
+
     api.get(`/workers/${id}`)
       .then((res) => {
         const result = res.data.data
@@ -52,15 +61,17 @@ const ProfileTalent = () => {
       <NavBar />
       <div className='bg-[#5E50A1] h-[361px] mb-[-361px] '></div>
 
-      <div className='px-[150px] pt-[70px] pb-[210px]'>
-        <div className="flex gap-[30px] container mx-auto">
+      <div className='px-[150px] pt-[70px] pb-[210px] max-lg:px-[30px]'>
+        <div className="flex gap-[30px] container mx-auto max-lg:flex-col">
 
           <div className="flex flex-col basis-4/12 gap-[34px] bg-[#FFFFFF] p-[30px] h-fit rounded-lg">
             <div className="flex flex-col gap-5 items-center">
               <ProfileImage image={profile.photo} />
+              <div className={myProfile.id === profile.id ? 'block' : 'hidden'}>
               <div className='flex gap-[6px] items-center cursor-pointer' onClick={handleEdit}>
-                <img src={GreyEdit} className='h-[16px]'/>
-                  <p className='font-semibold text-[22px] text-[#9EA0A5]'>Edit</p>
+                <img src={GreyEdit} className='h-[16px]' />
+                <p className='font-semibold text-[22px] text-[#9EA0A5]'>Edit</p>
+              </div>
               </div>
               <div className='flex flex-col gap-[13px] w-full'>
                 <ProfileName name={profile.name} />

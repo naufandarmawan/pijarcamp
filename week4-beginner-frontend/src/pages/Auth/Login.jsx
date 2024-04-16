@@ -71,7 +71,7 @@ const Login = () => {
                 />
               </div>
               <div className="flex flex-col gap-4">
-                <Button onClick={handleLogin}>Daftar</Button>
+                <Button onClick={handleLogin}>Masuk</Button>
                 <p className="text-center font-normal text-base text-[#1F2A36]">Anda belum punya akun? <Link className="text-[#FBB017]" to="/register">Daftar disini</Link></p>
               </div>
             </FormContainer>

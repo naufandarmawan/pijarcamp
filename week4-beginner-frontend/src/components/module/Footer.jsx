@@ -13,7 +13,7 @@ const Footer = () => {
                         elit. In euismod ipsum et dui rhoncus auctor.</p>
                 </div>
                 <div className="flex justify-between pt-[30px] border-t border-white max-lg:flex-col max-lg:items-center max-lg:gap-3">
-                    <p className="font-normal text-lg leading-7 text-white">2020 Pewworld. All right reserved</p>
+                    <p className="font-normal text-lg leading-7 text-white max-lg:text-center">2020 Pewworld. All right reserved</p>
                     <div className="flex gap-[79px]">
                         <Link to='/' className='font-normal text-lg leading-7 text-white'>Telepon</Link>
                         <Link to='mailto:naufandarmawan@gmail.com' className='font-normal text-lg leading-7 text-white'>Email</Link>

@@ -18,13 +18,9 @@ const ProfileTab = () => {
 
 
     useEffect(() => {
-        const token = localStorage.getItem('token')
+        // const token = localStorage.getItem('token')
 
-        api.get(`/portfolio/${id}`, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        api.get(`/portfolio/${id}`)
             .then((res) => {
                 const result = res.data.data
                 console.log(result)
@@ -34,11 +30,7 @@ const ProfileTab = () => {
                 console.log(err.response);
             })
 
-        api.get(`/experience/${id}`, {}, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        api.get(`/experience/${id}`)
             .then((res) => {
                 const result = res.data.data
                 console.log(result)
@@ -51,19 +43,19 @@ const ProfileTab = () => {
 
     return (
         <div className='flex flex-col gap-[34px]'>
-            <ul className='flex gap-[30px]'>
+            <ul className='flex gap-[30px] max-lg:overflow-x-scroll'>
                 <li className='flex flex-col gap-[11px] cursor-pointer' onClick={() => handleToggle(1)}>
-                    <h1 className={toggle === 1 ? 'font-semibold text-[22px] text-[#1F2A36]' : 'font-semibold text-[22px] text-[#9EA0A5]'}>Portofolio</h1>
+                    <h1 className={toggle === 1 ? 'font-semibold text-[22px] text-[#1F2A36] max-lg:text-base' : 'font-semibold text-[22px] text-[#9EA0A5] max-lg:text-base'}>Portofolio</h1>
                     <div className={toggle === 1 ? 'bg-[#5E50A1] h-1 rounded-full' : 'bg-transparent h-1 rounded-full'}></div>
                 </li>
                 <li className='flex flex-col gap-[11px] cursor-pointer' onClick={() => handleToggle(2)}>
-                    <h1 className={toggle === 2 ? 'font-semibold text-[22px] text-[#1F2A36]' : 'font-semibold text-[22px] text-[#9EA0A5]'}>Pengalaman Kerja</h1>
+                    <h1 className={toggle === 2 ? 'font-semibold text-[22px] text-[#1F2A36] max-lg:text-base' : 'font-semibold text-[22px] text-[#9EA0A5] max-lg:text-base'}>Pengalaman Kerja</h1>
                     <div className={toggle === 2 ? 'bg-[#5E50A1] h-1 rounded-full' : 'bg-transparent h-1 rounded-full'}></div>
                 </li>
             </ul>
 
             <div className={toggle === 1 ? 'block' : 'hidden'}>
-                <div className='grid grid-cols-3 gap-x-[18px] gap-y-[30px]'>
+                <div className='grid grid-cols-3 gap-x-[18px] gap-y-[30px] max-lg:grid-cols-1'>
                     {portfolioData.map((item) => (
                         <PortfolioContent
                             app={item.application_name}

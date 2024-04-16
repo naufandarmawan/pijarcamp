@@ -1,12 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PurpleLogo from '../../assets/purple-logo.svg'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import GreyBell from '../../assets/grey-bell.svg'
 import GreyMail from '../../assets/grey-mail.svg'
 import Person1 from '../../assets/person-1.png'
-
+import api from '../../configs/api'
 
 const NavBar = () => {
+
+    const [myProfile, setMyProfile] = useState({})
+
+    useEffect(() => {
+        api.get(`/workers/profile`)
+          .then((res) => {
+            const result = res.data.data
+            console.log(result);
+            setMyProfile(result)
+          })
+          .catch((err) => {
+            console.log(err.response);
+          })
+      }, [])
+    
+      const navigate = useNavigate()
+      const handleProfile = () => {
+        navigate(`/talent/profile/${myProfile.id}`)
+      }
+
     const preLogin =
         <div className="px-[150px] py-8 bg-white max-lg:p-8">
             <div className='container mx-auto flex justify-between items-center'>
@@ -28,7 +48,7 @@ const NavBar = () => {
                     <Link to='/home' className='font-semibold text-lg leading-7 text-[#1F2A36]'>Home</Link>
                 </div>
                 <div className="flex gap-4">
-                    <Link to='/talent/profile'><button
+                    <Link to='/talent/myprofile'><button
                         className="px-5 py-[10px] border border-solid border-[#5E50A1] rounded-[4px] font-bold text-sm leading-6 text-white bg-[#5E50A1]">Profile</button></Link>
                 </div>
             </div>
@@ -41,7 +61,7 @@ const NavBar = () => {
                 <div className="flex gap-10">
                     <img src={GreyBell} />
                     <img src={GreyMail} />
-                    <Link to='/talent/profile'><img className='h-[32px]' src={Person1} /></Link>
+                    <img className='h-[32px] rounded-full cursor-pointer' src={myProfile.photo ? myProfile.photo : Person1} onClick={handleProfile} />
                 </div>
             </div>
         </div>
@@ -50,10 +70,10 @@ const NavBar = () => {
     const getLocation = useLocation();
     const token = localStorage.getItem('token');
 
-    if (getLocation.pathname === '/' && token === false) {
-        return preLogin
-    } else if (getLocation.pathname === '/' && token === true) {
+    if (getLocation.pathname === '/'  && token) {
         return landingPostLogin
+    } else if (getLocation.pathname === '/') {
+        return preLogin
     } else {
         return postLogin
     }
