@@ -7,7 +7,7 @@ import Button from '../../components/base/Button'
 import api from '../../configs/api'
 
 
-const Register = () => {
+const RegisterTalent = () => {
   const navigate = useNavigate()
   const [form, setForm] = useState({
     email: '',
@@ -49,12 +49,20 @@ const Register = () => {
         <div className='container mx-auto flex gap-[70px]'>
 
           <div className='flex flex-col basis-1/2'>
-            <HeroAuth>Register</HeroAuth>
+            <HeroAuth>Temukan developer berbakat & terbaik di berbagai bidang keahlian</HeroAuth>
           </div>
 
           <div className='flex flex-col basis-1/2'>
-            <FormContainer formTitle='Register' formDescription='Register yuk'>
+            <FormContainer formTitle='Halo, Pewpeople' formDescription='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor.'>
               <div className="flex flex-col gap-4">
+              <Input
+                  type='text'
+                  value={form.name}
+                  onChange={handleChange}
+                  name="name"
+                  label="Name"
+                  placeholder="Masukkan nama"
+                />
                 <Input
                   type='email'
                   value={form.email}
@@ -64,22 +72,6 @@ const Register = () => {
                   placeholder="Masukkan email"
                 />
                 <Input
-                  type='password'
-                  value={form.password}
-                  onChange={handleChange}
-                  name="password"
-                  label="Password"
-                  placeholder="Masukkan password"
-                />
-                <Input
-                  type='text'
-                  value={form.name}
-                  onChange={handleChange}
-                  name="name"
-                  label="Name"
-                  placeholder="Masukkan nama"
-                />
-                <Input
                   type='tel'
                   value={form.phone}
                   onChange={handleChange}
@@ -87,10 +79,18 @@ const Register = () => {
                   label="Phone"
                   placeholder="Masukkan phone"
                 />
+                <Input
+                  type='password'
+                  value={form.password}
+                  onChange={handleChange}
+                  name="password"
+                  label="Password"
+                  placeholder="Masukkan password"
+                />
               </div>
               <div className="flex flex-col gap-4">
                 <Button onClick={handleRegister}>Daftar</Button>
-                <p className="text-center font-normal text-base text-[#1F2A36]">Anda belum punya akun? <Link className="text-[#FBB017]" to="/login">Daftar disini</Link></p>
+                <p className="text-center font-normal text-base text-[#1F2A36]">Anda sudah punya akun? <Link className="text-[#FBB017]" to="/login">Masuk disini</Link></p>
               </div>
             </FormContainer>
           </div>
@@ -102,4 +102,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default RegisterTalent

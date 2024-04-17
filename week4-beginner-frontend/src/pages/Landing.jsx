@@ -75,7 +75,7 @@ const Landing = () => {
                                 <p className="font-normal text-lg leading-7 text-[#46505C]">Lorem ipsum dolor sit amet, consectetur
                                     adipiscing elit. In euismod ipsum et dui rhoncus auctor.</p>
                             </div>
-                            <ul className="list-image-[url(../assets/yellow-tick.svg)] ...">
+                            {/* <ul className="list-image-[url(../assets/yellow-tick.svg)] ...">
                                 <li>Java</li>
                                 <li>Golang</li>
                                 <li>Kotlin</li>
@@ -84,7 +84,7 @@ const Landing = () => {
                                 <li>Ruby</li>
                                 <li>JavaScript</li>
                                 <li>10+ Bahasa lainnya</li>
-                            </ul>
+                            </ul> */}
                             <div className="grid gap-y-7 grid-cols-2">
                                 <div className="flex gap-[22px]">
                                     <img className="w-6" src={YellowTick} alt="" />

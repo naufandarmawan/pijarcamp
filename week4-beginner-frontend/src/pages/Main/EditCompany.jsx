@@ -25,16 +25,39 @@ import GreyEdit from '../../assets/grey-edit.svg'
 import FormSubContainer from '../../components/base/FormSubContainer'
 import Input from '../../components/base/Input'
 
+
 const EditCompany = () => {
-  const { id } = useParams()
   const [profile, setProfile] = useState({})
+  const [form, setForm] = useState({
+    company: '',
+    position: '',
+    city: '',
+    description: '',
+    phone: '',
+    instagram: '',
+    linkedin: '',
+    photo: '',
+    email: ''
+  });
 
   useEffect(() => {
-    api.get(`/workers/${id}`)
+    api.get(`/recruiters/profile`)
       .then((res) => {
         const result = res.data.data
         console.log(result);
         setProfile(result)
+        setForm({
+          company: result.company || '',
+          position: result.position || '',
+          city: result.city || '',
+          description: result.description || '',
+          phone: result.phone || '',
+          instagram: result.instagram || '',
+          linkedin: result.linkedin || '',
+          photo: result.photo || '',
+          email: result.email || ''
+
+        })
       })
       .catch((err) => {
         console.log(err.response);
@@ -42,37 +65,21 @@ const EditCompany = () => {
   }, [])
 
   const navigate = useNavigate()
-  const handleHire = () => {
-    navigate('hire')
+  const handleCancel = () => {
+    navigate(`/company/profile/`)
   }
 
-  const handleEdit = () => {
-    navigate('edit')
-  }
-
-  const [form, setForm] = useState({
-    email: '',
-    password: '',
-    name: '',
-    phone: ''
-  })
-
-  const handleRegister = (e) => {
+  const handleSave = (e) => {
     e.preventDefault()
     // console.log(form);
-    api.post('/workers/register', {
-      email: form.email,
-      password: form.password,
-      name: form.name,
-      phone: form.phone
-    })
-      .then(() => {
-        alert(`Register berhasil dengan email ${form.email} dan password ${form.password}. Silakan Login`)
-        navigate('/login')
+    api.put('/recruiters/profile', form)
+      .then((res) => {
+        console.log(res)
+        navigate(`/company/profile`)
       })
       .catch((err) => {
         console.log(err.response);
-        alert('Anda gagal register')
+        alert(`Gagal untuk memperbarui data - ${err.response.data.message}`)
       })
   }
 
@@ -84,165 +91,112 @@ const EditCompany = () => {
   }
 
   return (
-      <div className='bg-[#F6F7F8]'>
+    <div className='bg-[#F6F7F8]'>
 
-        <NavBar />
-        <div className='bg-[#5E50A1] h-[361px] mb-[-361px] '></div>
+      <NavBar />
+      <div className='bg-[#5E50A1] h-[361px] mb-[-361px] '></div>
 
-        <div className='px-[150px] pt-[70px] pb-[210px]'>
-          <div className="flex gap-[30px] container mx-auto">
+      <div className='px-[150px] pt-[70px] pb-[210px]'>
+        <div className="flex gap-[30px] container mx-auto">
 
-            <div className="flex flex-col basis-4/12 gap-[34px] bg-[#FFFFFF] p-[30px] h-fit rounded-lg">
-              <div className="flex flex-col gap-5 items-center">
-                <ProfileImage image={profile.photo} />
-                <div className='flex gap-[6px] items-center cursor-pointer' onClick={handleEdit}>
-                  <img src={GreyEdit} className='h-[16px]' />
-                  <p className='font-semibold text-[22px] text-[#9EA0A5]'>Edit</p>
-                </div>
-                <div className='flex flex-col gap-[13px] w-full'>
-                  <ProfileName name={profile.name} />
-                  <ProfileJob job={profile.job_desk} />
-                  <ProfileLocation location={profile.domicile} />
-                  <ProfileStatus status={profile.workplace} />
-                </div>
-                <ProfileDescription>{profile.description}</ProfileDescription>
+          <div className="flex flex-col basis-4/12 gap-[34px] bg-[#FFFFFF] p-[30px] h-fit rounded-lg">
+            <div className="flex flex-col gap-5 items-center">
+              <ProfileImage image={profile.photo} />
+              <div className='flex flex-col gap-[13px] w-full'>
+                <ProfileName name={profile.company} />
+                <ProfileJob job={profile.position} />
+                <ProfileLocation location={profile.city} />
+                {/* <ProfileStatus status={profile.workplace} /> */}
               </div>
+              <ProfileDescription>{profile.description}</ProfileDescription>
             </div>
-
-            <div className="flex flex-col basis-8/12 gap-[34px] h-fit">
-              <FormSubContainer subTitle='Data diri'>
-                <Input
-                  type='email'
-                  value={form.name}
-                  onChange={handleChange}
-                  name="name"
-                  label="Nama"
-                  placeholder="Masukkan nama"
-                />
-                <Input
-                  type='email'
-                  value={form.job_desk}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-                <Input
-                  type='email'
-                  value={form.domicile}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-                <Input
-                  type='email'
-                  value={form.email}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-                <Input
-                  type='email'
-                  value={form.email}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-              </FormSubContainer>
-
-              <FormSubContainer subTitle='Skill'>
-                <Input
-                  type='email'
-                  value={form.email}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-              </FormSubContainer>
-
-              <FormSubContainer subTitle='Pengalaman Kerja'>
-              <Input
-                  type='email'
-                  value={form.email}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-                <Input
-                  type='email'
-                  value={form.email}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-                <Input
-                  type='email'
-                  value={form.email}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-                <Input
-                  type='email'
-                  value={form.email}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-              </FormSubContainer>
-
-              <FormSubContainer subTitle='Portfolio'>
-                <Input
-                  type='email'
-                  value={form.email}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-                <Input
-                  type='email'
-                  value={form.email}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-                <Input
-                  type='email'
-                  value={form.email}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-                <Input
-                  type='email'
-                  value={form.email}
-                  onChange={handleChange}
-                  name="email"
-                  label="Email"
-                  placeholder="Masukkan email"
-                />
-              </FormSubContainer>
-
-              <Button>Save</Button>
-              <Button>Cancel</Button>
-            </div>
-
           </div>
-        </div>
 
-        <Footer />
+          <div className="flex flex-col basis-8/12 gap-[34px] h-fit">
+            <FormSubContainer subTitle='Data diri'>
+              <Input
+                type='text'
+                value={form.company}
+                onChange={handleChange}
+                name="company"
+                label="Nama Perusahaan"
+                placeholder="Masukan nama perusahan"
+              />
+              <Input
+                type='text'
+                value={form.position}
+                onChange={handleChange}
+                name="position"
+                label="Bidang"
+                placeholder="Masukan bidang perusahaan ex : Financial"
+              />
+              <Input
+                type='text'
+                value={form.city}
+                onChange={handleChange}
+                name="city"
+                label="Kota"
+                placeholder="Masukan kota"
+              />
+              <Input
+                type='text'
+                value={form.description}
+                onChange={handleChange}
+                name="description"
+                label="Deskripsi singkat"
+                placeholder="Tuliskan deskripsi singkat"
+              />
+              <Input
+                type='email'
+                value={form.email}
+                onChange={handleChange}
+                name="email"
+                label="Email"
+                placeholder="Masukan email"
+              />
+              <Input
+                type='url'
+                value={form.instagram}
+                onChange={handleChange}
+                name="instagram"
+                label="Instagram"
+                placeholder="Masukan nama Instagram"
+              />
+              <Input
+                type='tel'
+                value={form.phone}
+                onChange={handleChange}
+                name="phone"
+                label="Nomor Telepon"
+                placeholder="Masukan nomor telepon"
+              />
+              <Input
+                type='url'
+                value={form.linkedin}
+                onChange={handleChange}
+                name="linkedin"
+                label="Linkedin"
+                placeholder="Masukan nama Linkedin"
+              />
+              <Input
+                type='url'
+                value={form.photo}
+                onChange={handleChange}
+                name="photo"
+                label="Photo"
+                placeholder="Masukan link photo"
+              />
+            </FormSubContainer>
+
+            <Button onClick={handleSave}>Save</Button>
+            <Button onClick={handleCancel}>Cancel</Button>
+          </div>
+
+        </div>
       </div>
+
+      <Footer />
+    </div>
   )
 }
 

@@ -6,30 +6,42 @@ import Input from '../../components/base/Input'
 import Button from '../../components/base/Button'
 import api from '../../configs/api'
 
-const Login = () => {
+
+const RegisterRecruiter = () => {
   const navigate = useNavigate()
   const [form, setForm] = useState({
     email: '',
-    password: '',
+    password:'',
+    name:'',
+    company:'',
+    position:'',
+    phone:''
   })
 
-  const handleLogin = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault()
     // console.log(form);
-    api.post('/auth/login', {
+    api.post('/recruiters/register', {
       email: form.email,
       password: form.password,
+      name: form.name,
+      company: form.company,
+      position: form.position,
+      phone: form.phone
     })
       .then((res) => {
-        const { token, refreshToken } = res.data.data
-        localStorage.setItem('token', token)
-        localStorage.setItem('refreshToken', refreshToken)
-        alert(`Login berhasil. Selamat datang!`)
-        navigate('/')
+        console.log(res.response);
+        localStorage.setItem('email-terdaftar', form.email)
+        localStorage.setItem('password-terdaftar', form.password)
+
+        // Internal Server Error -> email terdaftar.
+        alert(`Register berhasil dengan email ${form.email} dan password ${form.password}. Silakan Login`)
+        navigate('/login')
       })
       .catch((err) => {
         console.log(err.response);
-        alert('Anda gagal login')
+        const error = err.response.data
+        alert(`Anda gagal register - ${error.message}`)
       })
   }
 
@@ -54,12 +66,44 @@ const Login = () => {
             <FormContainer formTitle='Halo, Pewpeople' formDescription='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor.'>
               <div className="flex flex-col gap-4">
                 <Input
+                  type='text'
+                  value={form.name}
+                  onChange={handleChange}
+                  name="name"
+                  label="Name"
+                  placeholder="Masukkan nama"
+                />
+                <Input
                   type='email'
                   value={form.email}
                   onChange={handleChange}
                   name="email"
                   label="Email"
                   placeholder="Masukkan email"
+                />
+                <Input
+                  type='text'
+                  value={form.company}
+                  onChange={handleChange}
+                  name="company"
+                  label="Perusahaan"
+                  placeholder="Masukan nama perusahaan"
+                />
+                <Input
+                  type='text'
+                  value={form.position}
+                  onChange={handleChange}
+                  name="position"
+                  label="Jabatan"
+                  placeholder="Posisi di perusahaan Anda"
+                />
+                <Input
+                  type='tel'
+                  value={form.phone}
+                  onChange={handleChange}
+                  name="phone"
+                  label="Phone"
+                  placeholder="Masukkan phone"
                 />
                 <Input
                   type='password'
@@ -71,12 +115,8 @@ const Login = () => {
                 />
               </div>
               <div className="flex flex-col gap-4">
-                <Link className="text-end font-normal text-base text-[#1F2A36]" to="/resetpassword">Lupa kata sandi?</Link>
-                <Button onClick={handleLogin}>Masuk</Button>
-                <p className="flex flex-col gap-2 text-center font-normal text-base text-[#1F2A36]">Anda belum punya akun?
-                <Link className="text-[#FBB017]" to="/register-talent">Daftar sebagai talent</Link>
-                <Link className="text-[#FBB017]" to="/register-recruiter">Daftar sebagai recruiter</Link>
-                </p>
+                <Button onClick={handleRegister}>Daftar</Button>
+                <p className="text-center font-normal text-base text-[#1F2A36]">Anda sudah punya akun? <Link className="text-[#FBB017]" to="/login">Masuk disini</Link></p>
               </div>
             </FormContainer>
           </div>
@@ -88,4 +128,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default RegisterRecruiter

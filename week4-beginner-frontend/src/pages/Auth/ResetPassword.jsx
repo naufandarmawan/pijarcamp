@@ -6,11 +6,11 @@ import Input from '../../components/base/Input'
 import Button from '../../components/base/Button'
 import api from '../../configs/api'
 
-const Login = () => {
+const ResetPassword = () => {
   const navigate = useNavigate()
   const [form, setForm] = useState({
     email: '',
-    password: '',
+    password:'',
   })
 
   const handleLogin = (e) => {
@@ -21,10 +21,10 @@ const Login = () => {
       password: form.password,
     })
       .then((res) => {
-        const { token, refreshToken } = res.data.data
-        localStorage.setItem('token', token)
-        localStorage.setItem('refreshToken', refreshToken)
-        alert(`Login berhasil. Selamat datang!`)
+        const {token, refreshToken, nama} = res.data.data
+        localStorage.setItem('token',token)
+        localStorage.setItem('refreshToken',refreshToken)
+        alert(`Login berhasil. Selamat datang ${nama}`)
         navigate('/')
       })
       .catch((err) => {
@@ -51,32 +51,18 @@ const Login = () => {
           </div>
 
           <div className='flex flex-col basis-1/2'>
-            <FormContainer formTitle='Halo, Pewpeople' formDescription='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor.'>
+            <FormContainer formTitle='Reset password' formDescription="Enter your user account's verified email address and we will send you a password reset link.">
               <div className="flex flex-col gap-4">
                 <Input
                   type='email'
-                  value={form.email}
-                  onChange={handleChange}
                   name="email"
                   label="Email"
-                  placeholder="Masukkan email"
-                />
-                <Input
-                  type='password'
-                  value={form.password}
-                  onChange={handleChange}
-                  name="password"
-                  label="Password"
-                  placeholder="Masukkan password"
+                  placeholder="Masukan alamat email"
                 />
               </div>
               <div className="flex flex-col gap-4">
-                <Link className="text-end font-normal text-base text-[#1F2A36]" to="/resetpassword">Lupa kata sandi?</Link>
-                <Button onClick={handleLogin}>Masuk</Button>
-                <p className="flex flex-col gap-2 text-center font-normal text-base text-[#1F2A36]">Anda belum punya akun?
-                <Link className="text-[#FBB017]" to="/register-talent">Daftar sebagai talent</Link>
-                <Link className="text-[#FBB017]" to="/register-recruiter">Daftar sebagai recruiter</Link>
-                </p>
+                <Button>Send password reset email</Button>
+                <Link className="text-center font-normal text-base text-[#1F2A36]" to="/login">Kembali ke halaman login</Link>
               </div>
             </FormContainer>
           </div>
@@ -88,4 +74,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default ResetPassword

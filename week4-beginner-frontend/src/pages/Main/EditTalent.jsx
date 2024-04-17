@@ -24,6 +24,7 @@ import api from '../../configs/api'
 import GreyEdit from '../../assets/grey-edit.svg'
 import FormSubContainer from '../../components/base/FormSubContainer'
 import Input from '../../components/base/Input'
+import AddSkill from '../../components/module/AddSkill'
 
 
 const EditTalent = () => {
@@ -149,7 +150,7 @@ const EditTalent = () => {
             </FormSubContainer>
 
             <FormSubContainer subTitle='Skill'>
-              <Input />
+              <AddSkill/>
             </FormSubContainer>
 
             <FormSubContainer subTitle='Pengalaman Kerja'>

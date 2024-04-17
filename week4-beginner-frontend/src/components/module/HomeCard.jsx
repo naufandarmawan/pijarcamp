@@ -19,7 +19,7 @@ const HomeCard = ({ image, name, job, location, skills, onClick }) => {
                     <ProfileLocation location={location} />
                     <ul className="flex flex-wrap gap-x-[10px] gap-y-[20px]">
                         {skills.map((item) => (
-                            <Tag>{item}</Tag>
+                            <Tag skill={item}/>
                         ))}
                     </ul>
                 </div>
