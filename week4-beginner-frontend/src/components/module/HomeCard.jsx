@@ -24,7 +24,7 @@ const HomeCard = ({ image, name, job, location, skills, onClick }) => {
                     </ul>
                 </div>
             </div>
-            <Button onClick={onClick} className="py-[15px] px-[30px] bg-[#5E50A1] rounded-[4px] font-bold text-base leading-5 text-[#FFFFFF]">Edit profile</Button>
+            <Button variant='primary-purple' text='View Profile' onClick={onClick} className="py-[15px] px-[30px] bg-[#5E50A1] rounded-[4px] font-bold text-base leading-5 text-[#FFFFFF]"/>
         </div>
     )
 }

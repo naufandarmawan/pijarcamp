@@ -1,12 +1,86 @@
-import React from 'react'
+import Person1 from '../../assets/person-1.png'
+import InstagramIcon from '../../assets/grey-instagram.svg'
+import PhoneIcon from '../../assets/grey-phone.svg'
+import LinkedinIcon from '../../assets/grey-linkedin.svg'
+
+import React, { useEffect, useState } from 'react'
 import NavBar from '../../components/module/NavBar'
 import Footer from '../../components/module/Footer'
-import Input from '../../components/base/Input'
+
+import ProfileImage from '../../components/base/BaseProfile/ProfileImage'
+import ProfileName from '../../components/base/BaseProfile/ProfileName'
+import ProfileJob from '../../components/base/BaseProfile/ProfileJob'
+import ProfileLocation from '../../components/base/BaseProfile/ProfileLocation'
+import ProfileStatus from '../../components/base/BaseProfile/ProfileStatus'
+import ProfileDescription from '../../components/base/BaseProfile/ProfileDescription'
+
+import ProfileTab from '../../components/module/ProfileTab'
+
+import Tag from '../../components/base/Skills'
+import SocialMedia from '../../components/base/Socials'
 import Button from '../../components/base/Button'
-import TalentProfile from '../../components/module/Profile'
-import TalentSkill from '../../components/module/ProfileSkill'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import api from '../../configs/api'
+import GreyEdit from '../../assets/grey-edit.svg'
+import FormSubContainer from '../../components/base/FormSubContainer'
+import Input from '../../components/base/Input'
+import AddSkill from '../../components/module/AddSkill'
+import AddExperience from '../../components/module/AddExperience'
+import AddPortfolio from '../../components/module/AddPortfolio'
+import FormContainer from '../../components/module/FormContainer'
+
 
 const HireTalent = () => {
+  const { id } = useParams()
+  const [profile, setProfile] = useState({})
+  const [form, setForm] = useState({
+    id:'',
+    worker_id: '',
+    message_purpose: '',
+    name: '',
+    email: '',
+    phone: '',
+    desciption: '',
+  });
+
+  const handleChange = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const getProfile = () => {
+    api.get(`/workers/${id}`)
+      .then((res) => {
+        const result = res.data.data
+        console.log(result);
+        setProfile(result)
+        setForm({worker_id: id})
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
+  }
+
+  useEffect(() => {
+    getProfile()
+  }, [])
+
+  const handleHire = (e) => {
+    e.preventDefault()
+    // console.log(form);
+    api.post('/hire', form)
+      .then((res) => {
+        console.log(res)
+        // navigate(`/talent/profile/${id}`)
+      })
+      .catch((err) => {
+        console.log(err.response);
+        alert('Gagal untuk memperbarui data')
+      })
+  }
+
   return (
     <div className="bg-[#F6F7F8]">
 
@@ -14,28 +88,69 @@ const HireTalent = () => {
 
       <div className='px-[150px] pt-[70px] pb-[210px]'>
         <div className="flex gap-[30px] container mx-auto">
-          
-          <div className="flex flex-col basis-4/12 gap-[34px] bg-[#FFFFFF] p-[30px] items-center h-fit rounded-lg ">
-            <TalentProfile />
-            <TalentSkill />
+
+          <div className="flex flex-col basis-4/12 gap-[34px] h-fit ">
+            <div className="flex flex-col gap-5 items-center p-[30px] bg-[#FFFFFF] rounded-lg">
+              <ProfileImage image={profile.photo} />
+              <div className='flex flex-col gap-[13px] w-full'>
+                <ProfileName name={profile.name} />
+                <ProfileJob job={profile.job_desk} />
+                <ProfileLocation location={profile.domicile} />
+                <ProfileStatus status={profile.workplace} />
+              </div>
+            </div>
           </div>
 
           <div className="flex flex-col basis-8/12 gap-[52px] px-[30px] h-fit">
-            <div className="flex flex-col gap-4">
-              <h1 className="font-semibold text-[32px] text-[#1F2A36]">Hubungi Lous Tomlinson</h1>
-              <p className="font-normal text-lg text-[#46505C]">Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                In euismod ipsum et dui rhoncus auctor.</p>
+            <div className='flex flex-col basis-1/2'>
+              <FormContainer formTitle={`Hubungi ${profile.name}`} formDescription='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor.'>
+                <div className="flex flex-col gap-4">
+                  <Input
+                    type='text'
+                    value={form.message_purpose}
+                    onChange={handleChange}
+                    name="message_purpose"
+                    label="Tujuan tentang pesan ini"
+                    placeholder="Projek"
+                  />
+                  <Input
+                    type='text'
+                    value={form.name}
+                    onChange={handleChange}
+                    name="name"
+                    label="Nama lengkap"
+                    placeholder="Masukan nama lengkap"
+                  />
+                  <Input
+                    type='email'
+                    value={form.email}
+                    onChange={handleChange}
+                    name="email"
+                    label="Email"
+                    placeholder="Masukan email"
+                  />
+                  <Input
+                    type='tel'
+                    value={form.phone}
+                    onChange={handleChange}
+                    name="phone"
+                    label="No Handpone"
+                    placeholder="Masukan no handpone"
+                  />
+                  <Input
+                    type='textarea'
+                    value={form.desciption}
+                    onChange={handleChange}
+                    name="desciption"
+                    label="Deskripsi"
+                    placeholder="Deskripsikan/jelaskan lebih detail "
+                  />
+                </div>
+                <div className='flex flex-col gap-[15px]'>
+                  <Button variant='primary-yellow' onClick={handleHire} text='Hire' />
+                </div>
+              </FormContainer>
             </div>
-            <form className="flex flex-col gap-[52px]" action="">
-              <div className="flex flex-col gap-8">
-                <Input />
-                <Input />
-                <Input />
-                <Input />
-                <Input />
-              </div>
-              <Button>Piw Profile</Button>
-            </form>
           </div>
 
         </div>

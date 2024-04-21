@@ -1,33 +1,90 @@
 import React, { useEffect, useState } from 'react'
 import GreyArrowLeft from '../../assets/grey-arrow-left.svg'
+import GreyArrowRight from '../../assets/grey-arrow-right.svg'
 import NavBar from '../../components/module/NavBar'
 import Footer from '../../components/module/Footer'
 import Search from '../../components/module/Search'
 import HomeCard from '../../components/module/HomeCard'
 import { useNavigate } from 'react-router-dom'
 import api from '../../configs/api'
+import Input from '../../components/base/Input'
+import Button from '../../components/base/Button'
+import GreySearch from '../../assets/grey-search.svg'
+
 
 
 const Home = () => {
   const [talent, setTalent] = useState([])
+  const [params, setParams] = useState({
+    limit: 10,
+    page: 1,
+    search: ''
+  })
+  const [searchInput, setSearchInput] = useState('');
+  const [selectedSort, setSelectedSort] = useState(''); // State for selected sorting option
 
-  useEffect(() => {
-    // const token = localStorage.getItem('token')
-    api.get('/workers/?limit=10&page=1')
+
+  const getTalent = () => {
+    api.get('/workers/', {
+      params: {
+        limit: params.limit,
+        page: params.page,
+        ...(params.search ? { search: params.search } : {}),
+        ...(params.sort ? { sort: params.sort } : {}), // Include sort parameter if selected
+        sortBy: params.sortBy,
+      }
+    })
       .then((res) => {
         const result = res.data.data
+        // console.log(result);
         setTalent(result)
       })
       .catch((err) => {
         console.log(err.response);
       })
-  }, [])
+  }
+
+
+  useEffect(() => {
+    getTalent()
+  }, [params])
 
   const navigate = useNavigate()
   const handleNavigate = (id) => {
     navigate(`/talent/profile/${id}`)
 
   }
+
+  const handlePrevious = () => {
+    setParams({
+      ...params,
+      page: params.page - 1
+    })
+  }
+  const handleNext = () => {
+    setParams({
+      ...params,
+      page: params.page + 1
+    })
+  }
+
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  }
+
+  const handleSearch = () => {
+    if (searchInput === '') {
+      setParams({ ...params, search: null }); // or setParams({ ...params, search: null });
+    } else {
+      setParams({ ...params, search: searchInput, sort: selectedSort });
+    }
+  }
+
+  const handleSortChange = (e) => {
+    const selectedValue = e.target.value;
+    setSelectedSort(selectedValue);
+    // setParams({ ...params, sort: selectedValue });
+  };
 
   return (
 
@@ -44,79 +101,56 @@ const Home = () => {
         <div className='px-[150px] py-[50px]'>
           <div className='container mx-auto flex flex-col gap-[50px]'>
 
-            <Search />
+            <div className="flex bg-white p-[8px] rounded-[8px] overflow-hidden shadow-[0px_1px_20px_0_rgba(197,197,197,0.25)]">
+              <div className='flex w-full pr-[25px]'>
+                <Input onChange={handleSearchInputChange} value={searchInput} name='search' className='p-[20px] outline-none font-normal text-sm leading-5 text-[#1F2A36] placeholder:text-[#858D96] border-0' label='' type="text" placeholder='Search for any skill' />
+                <img onClick={handleSearch} className='w-6 cursor-pointer' src={GreySearch} />
+              </div>
+
+              <div className='flex border-l pl-[25px] gap-[25px]'>
+                <select className='outline-none font-normal text-sm leading-5 text-[#1F2A36]' value={selectedSort}
+                  onChange={handleSortChange}>
+                  <option value="" selected>Sort</option>
+                  <option value="name">Sort by name</option>
+                  <option value="domicile">Sort by location</option>
+                </select>
+                <Button onClick={handleSearch} variant='primary-purple' text='Search' className="px-[30px] py-[15px] rounded-[4px] font-bold text-sm leading-6 text-white bg-[#5E50A1]">Search</Button>
+              </div>
+            </div>
 
             <div className="flex flex-col rounded-[8px] overflow-hidden shadow-[0px_1px_20px_0_rgba(197,197,197,0.25)] gap-[1px]">
               {talent.map((item) => (
                 <HomeCard
+                  key={item.id}
                   image={item.photo}
                   name={item.name}
                   job={item.job_desk}
                   location={item.domicile}
                   skills={item.skills}
-                  onClick={()=>handleNavigate(item.id)}
+                  onClick={() => handleNavigate(item.id)}
                 />
               ))}
-              {/* <div className="flex bg-[#FFFFFF] p-[20px] items-center justify-between h-fit">
-                <div className="flex gap-5 items-center">
-                  <img className="w-[100px]" src={Person1} alt="" />
-                  <div className='flex flex-col gap-2'>
-                    <h2 className="font-semibold text-[22px] text-[#1F2A36]">Louis Tomlinson
-                    </h2>
-                    <p className="font-normal text-sm leading-6 text-[#1F2A36]">Lorem ipsum dolor sit amet, consectetur
-                      adipiscing elit. Vestibulum erat orci.</p>
-                    <div className="flex gap-[11px]"><img src={GreyPin}
-                      alt="" />
-                      <p className="font-normal text-sm leading-5 text-[#9EA0A5]">Purwokerto, Jawa Tengah</p>
-                    </div>
-                    <ul className="flex flex-wrap gap-x-[10px] gap-y-[20px]">
-                      <li
-                        className="px-[14px] py-[4px] bg-[#FBB017] bg-opacity-60 border border-[#FBB017] border-solid rounded-[4px] font-semibold text-xs leading-5 text-white">
-                        Phyton</li>
-                      <li
-                        className="px-[14px] py-[4px] bg-[#FBB017] bg-opacity-60 border-[1px] border-[#FBB017] border-solid rounded-[4px] font-semibold text-xs leading-5 text-white">
-                        Laravel</li>
-                      <li
-                        className="px-[14px] py-[4px] bg-[#FBB017] bg-opacity-60 border-[1px] border-[#FBB017] border-solid rounded-[4px] font-semibold text-xs leading-5 text-white">
-                        Golang</li>
-                    </ul>
-                  </div>
-                </div>
-                <button className="py-[15px] px-[30px] bg-[#5E50A1] rounded-[4px] font-bold text-base leading-5 text-[#FFFFFF]">Edit profile</button>
-              </div> */}
-
-              {/* <div className='flex bg-white justify-between items-center px-[20px] py-[20px]'>
-                <div className='flex gap-[31px] items-center'>
-                  <img className='w-[100px]' src={Person1} alt="" />
-                  <div className='flex flex-col gap-[6px]'>
-                    <h2 className='font-semibold text-[22px] text-[#1F2A36]'>Louis Tomlinson</h2>
-                    <p className='font-normal text-sm leading-5 text-[#9EA0A5]'>Web developer</p>
-                    <div className='flex gap-[11px]'>
-                      <img src={GreyPin} alt="" />
-                      <p className='font-normal text-sm leading-5 text-[#9EA0A5]'>Lorem ipsum</p>
-                    </div>
-                    <ul className="flex flex-wrap gap-x-[10px] gap-y-[20px]">
-                      <li
-                        className="px-[14px] py-[4px] bg-[#FBB017] bg-opacity-60 border border-[#FBB017] border-solid rounded-[4px] font-semibold text-xs leading-5 text-white">
-                        Phyton</li>
-                      <li
-                        className="px-[14px] py-[4px] bg-[#FBB017] bg-opacity-60 border-[1px] border-[#FBB017] border-solid rounded-[4px] font-semibold text-xs leading-5 text-white">
-                        Laravel</li>
-                      <li
-                        className="px-[14px] py-[4px] bg-[#FBB017] bg-opacity-60 border-[1px] border-[#FBB017] border-solid rounded-[4px] font-semibold text-xs leading-5 text-white">
-                        Golang</li>
-                    </ul>
-                  </div>
-                </div>
-                <button className="py-[15px] px-[30px] bg-[#5E50A1] rounded-[4px] font-bold text-base leading-5 text-[#FFFFFF]">Edit profile</button>
-              </div> */}
             </div>
 
-            <div className="flex gap-[6px] justify-center">
-              <div className='flex rounded-[4px] bg-white border border-[#E2E5ED] size-[58px] items-center justify-center'><img className='w-[20px]' src={GreyArrowLeft} alt="" /></div>
-              <div className='flex rounded-[4px] bg-[#5E50A1] border border-[#E2E5ED] size-[58px] items-center justify-center'><p className='font-bold text-lg leading-7 text-white'>1</p></div>
-              <div className='flex rounded-[4px] bg-white border border-[#E2E5ED] size-[58px] items-center justify-center'><p className='font-normal text-lg leading-7 text-[#9EA0A5]'>2</p></div>
+            <div className="flex gap-[6px] justify-center items-center">
+              <div onClick={handlePrevious} className='flex rounded-[4px] bg-white border border-[#E2E5ED] size-[58px] items-center justify-center'><img className='w-[20px]' src={GreyArrowLeft} alt="" /></div>
+              {params.page}
+              {/* {(talent.pagination).map((page) => (
+                <div
+                  key={page}
+                  className={`flex rounded-[4px] border border-[#E2E5ED] size-[58px] items-center justify-center cursor-pointer ${
+                    params.page === page ? 'bg-[#5E50A1] text-white font-bold' : 'bg-white text-[#9EA0A5] font-normal'
+                  }`}
+                  onClick={() => setParams({ ...params, page })}
+                >
+                  {page}
+                </div>
+              ))} */}
+              <div onClick={handleNext} className='flex rounded-[4px] bg-white border border-[#E2E5ED] size-[58px] items-center justify-center'><img className='w-[20px]' src={GreyArrowRight} alt="" /></div>
+              {/* Active State <div className='flex rounded-[4px] bg-[#5E50A1] border border-[#E2E5ED] size-[58px] items-center justify-center'><p className='font-bold text-lg leading-7 text-white'>1</p></div> */}
+              {/* Inactive State <div className='flex rounded-[4px] bg-white border border-[#E2E5ED] size-[58px] items-center justify-center'><p className='font-normal text-lg leading-7 text-[#9EA0A5]'>2</p></div> */}
             </div>
+
           </div>
         </div>
       </div>

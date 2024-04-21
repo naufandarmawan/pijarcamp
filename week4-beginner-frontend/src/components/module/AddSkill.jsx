@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Input from '../base/Input'
 import Button from '../base/Button'
 import api from '../../configs/api'
+import Tag from '../base/Skills'
+import RemoveIcon from '../../assets/grey-arrow-left.svg'
 
 const AddSkill = () => {
     const [skill, setSkill] = useState('')
@@ -19,7 +21,17 @@ const AddSkill = () => {
         api.post(`/skills`,
             { skill_name: skill })
             .then((res) => {
-                setSkill(res)
+                setSkill('')
+                getSkill()
+            })
+            .catch((err) => {
+                console.log(err.response);
+            })
+    }
+
+    const handleDelete = (id) => {
+        api.delete(`/skills/${id}`)
+            .then(() => {
                 getSkill()
             })
             .catch((err) => {
@@ -33,8 +45,8 @@ const AddSkill = () => {
 
 
     return (
-        <div>
-            <div className='flex gap-2 items-center'>
+        <div className='flex flex-col gap-[30px]'>
+            <div className='flex gap-[30px]'>
                 <Input
                     className='w-full'
                     type='text'
@@ -43,11 +55,15 @@ const AddSkill = () => {
                     value={skill}
                     onChange={(e) => setSkill(e.target.value)}
                 />
-                <Button onClick={handleSkill}>Tambah</Button>
+                <Button variant='primary-yellow' onClick={handleSkill}>Tambah</Button>
             </div>
-            <ul>
+            <ul className='flex gap-2'>
                 {mySkill.map((item) => (
-                    <li key={item.id}>{item.skill_name}</li>
+                    <div key={item.id} className='flex justify-between gap-1'>
+                        <Tag key={item.id} skill={item.skill_name} />
+                        <img className='w-[12px]' onClick={()=>handleDelete(item.id)} src={RemoveIcon} />
+                        {/* <div onClick={()=>handleDelete(item.id)}>Delete</div> */}
+                    </div>
                 ))}
             </ul>
 

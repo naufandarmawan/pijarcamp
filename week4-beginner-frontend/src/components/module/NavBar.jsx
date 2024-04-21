@@ -10,44 +10,96 @@ const NavBar = () => {
 
     const [myProfile, setMyProfile] = useState({})
     const [myRole, setMyRole] = useState('')
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-    useEffect(() => {
-
-        api.get(`/auth/check-role`)
+    const handleLogOut = () => {
+        api.get(`/auth/logout`)
             .then((res) => {
-                const result = res.data.data.data.role
-                console.log(result);
-                setMyRole(result)
+                localStorage.removeItem('token')
+                localStorage.removeItem('refreshToken')
+                alert(res.data.message);
+                setIsLoggedIn(false);
             })
             .catch((err) => {
                 console.log(err.response);
             })
+    }
 
-        if (myRole === 'recruiter') {
-            api.get(`/recruiters/profile`)
-                .then((res) => {
-                    const result = res.data.data
-                    console.log(result);
-                    setMyProfile(result)
-                })
-                .catch((err) => {
-                    console.log(err.response);
-                })
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            setIsLoggedIn(true);
         } else {
-            api.get(`/workers/profile`)
+            setIsLoggedIn(false);
+        }
+        if (isLoggedIn) {
+            // Fetch role and profile
+            api.get(`/auth/check-role`)
                 .then((res) => {
-                    const result = res.data.data
-                    console.log(result);
-                    setMyProfile(result)
+                    const result = res.data.data.data.role;
+                    setMyRole(result);
                 })
                 .catch((err) => {
                     console.log(err.response);
-                })
+                });
+
+            if (myRole === 'recruiter') {
+                api.get(`/recruiters/profile`)
+                    .then((res) => {
+                        const result = res.data.data;
+                        setMyProfile(result);
+                    })
+                    .catch((err) => {
+                        console.log(err.response);
+                    });
+            } else {
+                api.get(`/workers/profile`)
+                    .then((res) => {
+                        const result = res.data.data;
+                        setMyProfile(result);
+                    })
+                    .catch((err) => {
+                        console.log(err.response);
+                    });
+            }
         }
 
-    }, [])
+        // api.get(`/auth/check-role`)
+        //     .then((res) => {
+        //         const result = res.data.data.data.role
+        //         console.log(result);
+        //         setMyRole(result)
+        //     })
+        //     .catch((err) => {
+        //         console.log(err.response);
+        //     })
+
+        // if (myRole === 'recruiter') {
+        //     api.get(`/recruiters/profile`)
+        //         .then((res) => {
+        //             const result = res.data.data
+        //             console.log(result);
+        //             setMyProfile(result)
+        //         })
+        //         .catch((err) => {
+        //             console.log(err.response);
+        //         })
+        // } else {
+        //     api.get(`/workers/profile`)
+        //         .then((res) => {
+        //             const result = res.data.data
+        //             console.log(result);
+        //             setMyProfile(result)
+        //         })
+        //         .catch((err) => {
+        //             console.log(err.response);
+        //         })
+        // }
+
+    }, [isLoggedIn, myRole])
 
     const navigate = useNavigate()
+
     const handleProfile = () => {
         if (myRole === 'recruiter') {
             navigate(`/company/profile/`)
@@ -80,6 +132,8 @@ const NavBar = () => {
                 <div className="flex gap-4">
                     <button onClick={handleProfile}
                         className="px-5 py-[10px] border border-solid border-[#5E50A1] rounded-[4px] font-bold text-sm leading-6 text-white bg-[#5E50A1]">Profile</button>
+                    <button onClick={handleLogOut}
+                        className="px-5 py-[10px] border border-solid border-[#5E50A1] rounded-[4px] font-bold text-sm leading-6 text-white bg-[#5E50A1]">Log Out</button>
                 </div>
             </div>
         </div>
@@ -92,15 +146,16 @@ const NavBar = () => {
                     <img src={GreyBell} />
                     <img src={GreyMail} />
                     <img className='h-[32px] rounded-full cursor-pointer' src={myProfile.photo ? myProfile.photo : Person1} onClick={handleProfile} />
+                    <button onClick={handleLogOut}
+                        className="px-5 py-[10px] border border-solid border-[#5E50A1] rounded-[4px] font-bold text-sm leading-6 text-white bg-[#5E50A1]">Log Out</button>
                 </div>
             </div>
         </div>
 
 
     const getLocation = useLocation();
-    const token = localStorage.getItem('token');
 
-    if (getLocation.pathname === '/' && token) {
+    if (getLocation.pathname === '/' && isLoggedIn) {
         return landingPostLogin
     } else if (getLocation.pathname === '/') {
         return preLogin

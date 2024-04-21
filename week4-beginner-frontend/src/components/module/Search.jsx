@@ -4,11 +4,11 @@ import Button from '../base/Button'
 import Input from '../base/Input'
 
 
-const Search = () => {
+const Search = ({...props}) => {
     return (
         <div className="flex bg-white p-[8px] rounded-[8px] overflow-hidden shadow-[0px_1px_20px_0_rgba(197,197,197,0.25)]">
             <div className='flex w-full pr-[25px]'>
-                <Input className='p-[20px] outline-none font-normal text-sm leading-5 text-[#1F2A36] placeholder:text-[#858D96] border-0' label='' type="text" placeholder='Search for any skill'/>
+                <Input {...props} className='p-[20px] outline-none font-normal text-sm leading-5 text-[#1F2A36] placeholder:text-[#858D96] border-0' label='' type="text" placeholder='Search for any skill'/>
                 <img className='w-6' src={GreySearch} alt="" />
             </div>
 

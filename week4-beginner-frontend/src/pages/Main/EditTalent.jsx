@@ -25,6 +25,8 @@ import GreyEdit from '../../assets/grey-edit.svg'
 import FormSubContainer from '../../components/base/FormSubContainer'
 import Input from '../../components/base/Input'
 import AddSkill from '../../components/module/AddSkill'
+import AddExperience from '../../components/module/AddExperience'
+import AddPortfolio from '../../components/module/AddPortfolio'
 
 
 const EditTalent = () => {
@@ -36,6 +38,7 @@ const EditTalent = () => {
     domicile: '',
     workplace: '',
     description: '',
+    photo: '',
   });
 
   useEffect(() => {
@@ -50,6 +53,7 @@ const EditTalent = () => {
           domicile: result.domicile || '',
           workplace: result.workplace || '',
           description: result.description || '',
+          photo: result.photo || '',
         })
       })
       .catch((err) => {
@@ -65,10 +69,29 @@ const EditTalent = () => {
   const handleSave = (e) => {
     e.preventDefault()
     // console.log(form);
-    api.put('/workers/profile', form)
+
+    if (form.photo !== profile.photo) {
+      api.put(`/workers/profile/photo/`, { photo: form.photo })
+        .then((res) => {
+          console.log(res)
+          // navigate(`/talent/profile/${id}`)
+        })
+        .catch((err) => {
+          console.log(err.response);
+          alert('Failed to update profile data')
+        })
+    }
+
+    api.put('/workers/profile', {
+      name: form.name,
+      job_desk: form.job_desk,
+      domicile: form.domicile,
+      workplace: form.workplace,
+      description: form.description,
+    })
       .then((res) => {
         console.log(res)
-        navigate(`/talent/profile/${id}`)
+        // navigate(`/talent/profile/${id}`)
       })
       .catch((err) => {
         console.log(err.response);
@@ -83,6 +106,28 @@ const EditTalent = () => {
     })
   }
 
+  const handleEdit = (e) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleUpload = (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('file', file)
+    api.post(`/upload`, formData)
+      .then((res) => {
+        const { file_url } = res.data.data
+        setForm({ ...form, photo: file_url })
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+      
+  }
+
   return (
     <div className='bg-[#F6F7F8]'>
 
@@ -92,20 +137,30 @@ const EditTalent = () => {
       <div className='px-[150px] pt-[70px] pb-[210px]'>
         <div className="flex gap-[30px] container mx-auto">
 
-          <div className="flex flex-col basis-4/12 gap-[34px] bg-[#FFFFFF] p-[30px] h-fit rounded-lg">
-            <div className="flex flex-col gap-5 items-center">
+          <div className="flex flex-col basis-4/12 gap-[34px] h-fit ">
+            <div className="flex flex-col gap-5 items-center p-[30px] bg-[#FFFFFF] rounded-lg">
               <ProfileImage image={profile.photo} />
+              <div className='flex gap-[6px] items-center cursor-pointer' onClick={handleEdit}>
+                {form.photo && <img src={form.photo} />}
+                <input type="file" onChange={handleUpload} />
+                {/* <img src={GreyEdit} className='h-[16px]' />
+                <p className='font-semibold text-[22px] text-[#9EA0A5]'>Edit</p> */}
+              </div>
               <div className='flex flex-col gap-[13px] w-full'>
                 <ProfileName name={profile.name} />
                 <ProfileJob job={profile.job_desk} />
                 <ProfileLocation location={profile.domicile} />
                 <ProfileStatus status={profile.workplace} />
               </div>
-              <ProfileDescription>{profile.description}</ProfileDescription>
+            </div>
+            <div className='flex flex-col gap-[15px]'>
+              <Button variant='primary-purple' onClick={handleSave} text='Save' />
+              <Button variant='secondary-purple' onClick={handleCancel} text='Cancel' />
             </div>
           </div>
 
           <div className="flex flex-col basis-8/12 gap-[34px] h-fit">
+
             <FormSubContainer subTitle='Data diri'>
               <Input
                 type='text'
@@ -150,25 +205,16 @@ const EditTalent = () => {
             </FormSubContainer>
 
             <FormSubContainer subTitle='Skill'>
-              <AddSkill/>
+              <AddSkill />
             </FormSubContainer>
 
             <FormSubContainer subTitle='Pengalaman Kerja'>
-              <Input />
-              <Input />
-              <Input />
-              <Input />
+              <AddExperience />
             </FormSubContainer>
 
             <FormSubContainer subTitle='Portfolio'>
-              <Input />
-              <Input />
-              <Input />
-              <Input />
+              <AddPortfolio />
             </FormSubContainer>
-
-            <Button onClick={handleSave}>Save</Button>
-            <Button onClick={handleCancel}>Cancel</Button>
           </div>
 
         </div>

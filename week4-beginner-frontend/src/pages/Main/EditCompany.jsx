@@ -56,7 +56,6 @@ const EditCompany = () => {
           linkedin: result.linkedin || '',
           photo: result.photo || '',
           email: result.email || ''
-
         })
       })
       .catch((err) => {
@@ -90,6 +89,20 @@ const EditCompany = () => {
     })
   }
 
+  const handleUpload = (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('file', file)
+    api.post(`/upload`, formData)
+      .then((res) => {
+        const { file_url } = res.data.data
+        setForm({ ...form, photo: file_url })
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }
+
   return (
     <div className='bg-[#F6F7F8]'>
 
@@ -99,8 +112,8 @@ const EditCompany = () => {
       <div className='px-[150px] pt-[70px] pb-[210px]'>
         <div className="flex gap-[30px] container mx-auto">
 
-          <div className="flex flex-col basis-4/12 gap-[34px] bg-[#FFFFFF] p-[30px] h-fit rounded-lg">
-            <div className="flex flex-col gap-5 items-center">
+          <div className="flex flex-col basis-4/12 gap-[34px] h-fit ">
+            <div className="flex flex-col gap-5 items-center bg-[#FFFFFF] p-[30px] rounded-lg">
               <ProfileImage image={profile.photo} />
               <div className='flex flex-col gap-[13px] w-full'>
                 <ProfileName name={profile.company} />
@@ -109,6 +122,10 @@ const EditCompany = () => {
                 {/* <ProfileStatus status={profile.workplace} /> */}
               </div>
               <ProfileDescription>{profile.description}</ProfileDescription>
+            </div>
+            <div className='flex flex-col gap-[15px]'>
+              <Button variant='primary-purple' onClick={handleSave} text='Save' />
+              <Button variant='secondary-purple' onClick={handleCancel} text='Cancel' />
             </div>
           </div>
 
@@ -178,18 +195,11 @@ const EditCompany = () => {
                 label="Linkedin"
                 placeholder="Masukan nama Linkedin"
               />
-              <Input
-                type='url'
-                value={form.photo}
-                onChange={handleChange}
-                name="photo"
-                label="Photo"
-                placeholder="Masukan link photo"
-              />
+
+              {form.photo && <img src={form.photo} />}
+              <input type="file" onChange={handleUpload} />
             </FormSubContainer>
 
-            <Button onClick={handleSave}>Save</Button>
-            <Button onClick={handleCancel}>Cancel</Button>
           </div>
 
         </div>
