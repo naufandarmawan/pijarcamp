@@ -7,7 +7,6 @@ const Carousel = () => {
   const settings = {
     dots: false,
     infinite: true,
-    speed: 500,
     slidesToShow: 3,
     slidesToScroll: 1,
     arrows: true
@@ -27,6 +26,7 @@ const Carousel = () => {
                 consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor.
               </p>
           </div>
+          
           <div
             className="px-[76px] py-[36px] flex flex-col items-center gap-[12px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
             <img className="rounded-full border-[10px] border-[#FBB017]/[.37]"
@@ -39,6 +39,7 @@ const Carousel = () => {
                 consectetur adipiscing elit. In euismod ipsum et dui rhoncus auctor.
               </p>
           </div>
+
           <div
             className="px-[76px] py-[36px] flex flex-col items-center gap-[12px] shadow-[0_35px_60px_-15px_rgba(0,0,0,0.3)]">
             <img className="rounded-full border-[10px] border-[#FBB017]/[.37]"

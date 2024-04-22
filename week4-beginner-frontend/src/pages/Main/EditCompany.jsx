@@ -119,9 +119,7 @@ const EditCompany = () => {
                 <ProfileName name={profile.company} />
                 <ProfileJob job={profile.position} />
                 <ProfileLocation location={profile.city} />
-                {/* <ProfileStatus status={profile.workplace} /> */}
               </div>
-              <ProfileDescription>{profile.description}</ProfileDescription>
             </div>
             <div className='flex flex-col gap-[15px]'>
               <Button variant='primary-purple' onClick={handleSave} text='Save' />

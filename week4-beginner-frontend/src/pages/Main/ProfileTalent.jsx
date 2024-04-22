@@ -18,17 +18,22 @@ import { useNavigate, useParams } from 'react-router-dom'
 import api from '../../configs/api'
 import GreyEdit from '../../assets/grey-edit.svg'
 
+import EmailIcon from '../../assets/grey-mail.svg'
+import InstagramIcon from '../../assets/grey-instagram.svg'
+import GithubIcon from '../../assets/grey-github.svg'
+import GitlabIcon from '../../assets/grey-gitlab.svg'
+
 
 const ProfileTalent = () => {
   const { id } = useParams()
   const [profile, setProfile] = useState({})
+  const [skills, setSkills] = useState([])
   const [myProfile, setMyProfile] = useState({})
 
   useEffect(() => {
     api.get(`/workers/profile`)
       .then((res) => {
         const result = res.data.data
-        console.log(result);
         setMyProfile(result)
       })
       .catch((err) => {
@@ -38,8 +43,16 @@ const ProfileTalent = () => {
     api.get(`/workers/${id}`)
       .then((res) => {
         const result = res.data.data
-        console.log(result);
         setProfile(result)
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
+
+    api.get(`/skills/${id}`)
+      .then((res) => {
+        const result = res.data.data
+        setSkills(result)
       })
       .catch((err) => {
         console.log(err.response);
@@ -67,12 +80,6 @@ const ProfileTalent = () => {
           <div className="flex flex-col basis-4/12 gap-[34px] bg-[#FFFFFF] p-[30px] h-fit rounded-lg">
             <div className="flex flex-col gap-5 items-center">
               <ProfileImage image={profile.photo} />
-              <div className={myProfile.id === profile.id ? 'block' : 'hidden'}>
-              <div className='flex gap-[6px] items-center cursor-pointer' onClick={handleEdit}>
-                <img src={GreyEdit} className='h-[16px]' />
-                <p className='font-semibold text-[22px] text-[#9EA0A5]'>Edit</p>
-              </div>
-              </div>
               <div className='flex flex-col gap-[13px] w-full'>
                 <ProfileName name={profile.name} />
                 <ProfileJob job={profile.job_desk} />
@@ -80,23 +87,35 @@ const ProfileTalent = () => {
                 <ProfileStatus status={profile.workplace} />
               </div>
               <ProfileDescription>{profile.description}</ProfileDescription>
-              <Button className='w-full' onClick={handleHire}>Hire</Button>
+              {(profile.id === myProfile.id) ? <Button variant='primary-yellow' className='w-full' onClick={handleEdit} text='Edit' /> : <Button variant='primary-purple' className='w-full' onClick={handleHire} text='Hire' />}
             </div>
 
             <div className="flex flex-col gap-5">
               <h3 className="font-semibold text-[22px] leading-6 text-[#1F2A36]">Skill</h3>
               <ul className="flex flex-wrap gap-x-[10px] gap-y-[20px]">
-                <Tag />
-                <Tag />
-                <Tag />
+                {skills.map((item) => (
+                  <Tag key={item.id} skill={item.skill_name} />
+                ))}
               </ul>
             </div>
 
             <div className="flex flex-col gap-6 font-normal text-sm leading-5 text-[#9EA0A5]">
-              <SocialMedia></SocialMedia>
-              <SocialMedia></SocialMedia>
-              <SocialMedia></SocialMedia>
-              <SocialMedia></SocialMedia>
+              <SocialMedia
+                image={EmailIcon}
+                social={profile.email}
+              />
+              <SocialMedia
+                image={InstagramIcon}
+                social={profile.instagram}
+              />
+              <SocialMedia
+                image={GithubIcon}
+                social={profile.github}
+              />
+              <SocialMedia
+                image={GitlabIcon}
+                social={profile.gitlab}
+              />
             </div>
           </div>
 

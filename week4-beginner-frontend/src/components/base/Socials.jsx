@@ -1,8 +1,11 @@
 import React from 'react'
 import EmailIcon from '../../assets/grey-mail.svg'
 import InstagramIcon from '../../assets/grey-instagram.svg'
+import GithubIcon from '../../assets/grey-github.svg'
+import GitlabIcon from '../../assets/grey-gitlab.svg'
 import PhoneIcon from '../../assets/grey-phone.svg'
 import LinkedinIcon from '../../assets/grey-linkedin.svg'
+import PhotoIcon from '../../assets/grey-photo.svg'
 
 const SocialMedia = ({image, social}) => {
     return (

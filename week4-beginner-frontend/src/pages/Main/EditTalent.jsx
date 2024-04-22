@@ -114,18 +114,25 @@ const EditTalent = () => {
   }
 
   const handleUpload = (e) => {
-    const file = e.target.files[0]
+    const photo = e.target.files[0]
     const formData = new FormData()
-    formData.append('file', file)
-    api.post(`/upload`, formData)
+    formData.append('photo', photo)
+    // api.post(`/upload`, formData)
+    //   .then((res) => {
+    //     const { file_url } = res.data.data
+    //     setForm({ ...form, photo: file_url })
+    //   })
+    //   .catch((err) => {
+    //     console.log(err.response);
+    //   });
+    api.put(`/workers/profile/photo`, formData)
       .then((res) => {
-        const { file_url } = res.data.data
-        setForm({ ...form, photo: file_url })
+        console.log(res);
       })
       .catch((err) => {
         console.log(err.response);
       });
-      
+
   }
 
   return (
@@ -140,12 +147,11 @@ const EditTalent = () => {
           <div className="flex flex-col basis-4/12 gap-[34px] h-fit ">
             <div className="flex flex-col gap-5 items-center p-[30px] bg-[#FFFFFF] rounded-lg">
               <ProfileImage image={profile.photo} />
-              <div className='flex gap-[6px] items-center cursor-pointer' onClick={handleEdit}>
-                {form.photo && <img src={form.photo} />}
-                <input type="file" onChange={handleUpload} />
-                {/* <img src={GreyEdit} className='h-[16px]' />
-                <p className='font-semibold text-[22px] text-[#9EA0A5]'>Edit</p> */}
-              </div>
+              <input type="file" onChange={handleUpload} />
+              {/* <div className='flex gap-[6px] items-center cursor-pointer' onClick={handleEdit}>
+                <img src={GreyEdit} className='h-[16px]' />
+                <p className='font-semibold text-[22px] text-[#9EA0A5]'>Edit</p>
+              </div> */}
               <div className='flex flex-col gap-[13px] w-full'>
                 <ProfileName name={profile.name} />
                 <ProfileJob job={profile.job_desk} />

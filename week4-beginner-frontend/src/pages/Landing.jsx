@@ -1,5 +1,4 @@
 import React from 'react'
-import { useEffect } from "react"
 import HeroImage from '../assets/hero-image.png'
 import WhyImage from '../assets/why-image.png'
 import PurpleTick from '../assets/purple-tick.svg'
@@ -8,10 +7,7 @@ import YellowTick from '../assets/yellow-tick.svg'
 import CTAImage from '../assets/cta-image.png'
 import Footer from '../components/module/Footer'
 import NavBar from '../components/module/NavBar'
-
-import Carousel from '../components/Carousel'
-
-
+import CustomArrows from '../components/module/Carousel'
 
 const Landing = () => {
     return (
@@ -133,7 +129,8 @@ const Landing = () => {
                             <h2 className="font-semibold text-[36px] leading-[56px] text-[#1F2A36] text-center">Their opinion about
                                 peworld</h2>
                         </div>
-                        <Carousel />
+                        
+                        <CustomArrows />
                     </section>
 
                     <section id="cta"

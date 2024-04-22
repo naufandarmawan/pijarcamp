@@ -72,7 +72,8 @@ const Login = () => {
               </div>
               <div className="flex flex-col gap-4">
                 <Link className="text-end font-normal text-base text-[#1F2A36]" to="/resetpassword">Lupa kata sandi?</Link>
-                <Button onClick={handleLogin}>Masuk</Button>
+                {/* <Link className="text-end font-normal text-base text-[#FBB017]" to="/resetpassword">Lupa kata sandi?</Link> */}
+                <Button variant='primary-yellow' onClick={handleLogin} text='Masuk'/>
                 <p className="flex flex-col gap-2 text-center font-normal text-base text-[#1F2A36]">Anda belum punya akun?
                 <Link className="text-[#FBB017]" to="/register-talent">Daftar sebagai talent</Link>
                 <Link className="text-[#FBB017]" to="/register-recruiter">Daftar sebagai recruiter</Link>

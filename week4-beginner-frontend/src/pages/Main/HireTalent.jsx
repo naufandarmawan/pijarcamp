@@ -34,7 +34,7 @@ const HireTalent = () => {
   const { id } = useParams()
   const [profile, setProfile] = useState({})
   const [form, setForm] = useState({
-    id:'',
+    id: '',
     worker_id: '',
     message_purpose: '',
     name: '',
@@ -42,6 +42,8 @@ const HireTalent = () => {
     phone: '',
     desciption: '',
   });
+  const [skills, setSkills] = useState([])
+
 
   const handleChange = (e) => {
     setForm({
@@ -56,7 +58,7 @@ const HireTalent = () => {
         const result = res.data.data
         console.log(result);
         setProfile(result)
-        setForm({worker_id: id})
+        setForm({ worker_id: id })
       })
       .catch((err) => {
         console.log(err.response);
@@ -65,6 +67,14 @@ const HireTalent = () => {
 
   useEffect(() => {
     getProfile()
+    api.get(`/skills/${id}`)
+      .then((res) => {
+        const result = res.data.data
+        setSkills(result)
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
   }, [])
 
   const handleHire = (e) => {
@@ -89,8 +99,8 @@ const HireTalent = () => {
       <div className='px-[150px] pt-[70px] pb-[210px]'>
         <div className="flex gap-[30px] container mx-auto">
 
-          <div className="flex flex-col basis-4/12 gap-[34px] h-fit ">
-            <div className="flex flex-col gap-5 items-center p-[30px] bg-[#FFFFFF] rounded-lg">
+          <div className="flex flex-col basis-4/12 gap-[34px] bg-[#FFFFFF] p-[30px] h-fit rounded-lg">
+            <div className="flex flex-col gap-5 items-center">
               <ProfileImage image={profile.photo} />
               <div className='flex flex-col gap-[13px] w-full'>
                 <ProfileName name={profile.name} />
@@ -98,6 +108,16 @@ const HireTalent = () => {
                 <ProfileLocation location={profile.domicile} />
                 <ProfileStatus status={profile.workplace} />
               </div>
+              <ProfileDescription>{profile.description}</ProfileDescription>
+            </div>
+
+            <div className="flex flex-col gap-5">
+              <h3 className="font-semibold text-[22px] leading-6 text-[#1F2A36]">Skill</h3>
+              <ul className="flex flex-wrap gap-x-[10px] gap-y-[20px]">
+                {skills.map((item) => (
+                  <Tag key={item.id} skill={item.skill_name} />
+                ))}
+              </ul>
             </div>
           </div>
 

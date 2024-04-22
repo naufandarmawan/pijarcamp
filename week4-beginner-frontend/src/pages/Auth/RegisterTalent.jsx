@@ -25,13 +25,15 @@ const RegisterTalent = () => {
       name: form.name,
       phone: form.phone
     })
-      .then(() => {
+      .then((res) => {
+        console.log(res.response);
         alert(`Register berhasil dengan email ${form.email} dan password ${form.password}. Silakan Login`)
         navigate('/login')
       })
       .catch((err) => {
         console.log(err.response);
-        alert('Anda gagal register')
+        const error = err.response.data
+        alert(`Anda gagal register - ${error.message}`)
       })
   }
 
@@ -89,7 +91,7 @@ const RegisterTalent = () => {
                 />
               </div>
               <div className="flex flex-col gap-4">
-                <Button onClick={handleRegister}>Daftar</Button>
+                <Button variant='primary-yellow' onClick={handleRegister} text='Daftar'/>
                 <p className="text-center font-normal text-base text-[#1F2A36]">Anda sudah punya akun? <Link className="text-[#FBB017]" to="/login">Masuk disini</Link></p>
               </div>
             </FormContainer>

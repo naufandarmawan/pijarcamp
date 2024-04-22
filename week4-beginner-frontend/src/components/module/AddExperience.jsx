@@ -120,6 +120,7 @@ const AddExperience = () => {
                         name="company"
                         label="Nama perusahaan"
                         placeholder="PT Harus bisa" />
+                    <div className='flex gap-[15px]'> 
                     <Input
                         type='text'
                         value={form.work_month}
@@ -133,9 +134,10 @@ const AddExperience = () => {
                         value={form.work_year}
                         onChange={handleChange}
                         name="work_year"
-                        label="tahun"
+                        label="Tahun"
                         placeholder="2018"
                     />
+                    </div>
                     <Input
                         type='textarea'
                         value={form.description}

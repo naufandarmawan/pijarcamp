@@ -31,10 +31,6 @@ const RegisterRecruiter = () => {
     })
       .then((res) => {
         console.log(res.response);
-        localStorage.setItem('email-terdaftar', form.email)
-        localStorage.setItem('password-terdaftar', form.password)
-
-        // Internal Server Error -> email terdaftar.
         alert(`Register berhasil dengan email ${form.email} dan password ${form.password}. Silakan Login`)
         navigate('/login')
       })
@@ -115,7 +111,7 @@ const RegisterRecruiter = () => {
                 />
               </div>
               <div className="flex flex-col gap-4">
-                <Button onClick={handleRegister}>Daftar</Button>
+                <Button variant='primary-yellow' onClick={handleRegister} text='Daftar'/>
                 <p className="text-center font-normal text-base text-[#1F2A36]">Anda sudah punya akun? <Link className="text-[#FBB017]" to="/login">Masuk disini</Link></p>
               </div>
             </FormContainer>

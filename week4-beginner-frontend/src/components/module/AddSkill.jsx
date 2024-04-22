@@ -59,9 +59,10 @@ const AddSkill = () => {
             </div>
             <ul className='flex gap-2'>
                 {mySkill.map((item) => (
-                    <div key={item.id} className='flex justify-between gap-1'>
+                    <div key={item.id} className='flex justify-between items-center gap-1'>
                         <Tag key={item.id} skill={item.skill_name} />
-                        <img className='w-[12px]' onClick={()=>handleDelete(item.id)} src={RemoveIcon} />
+                        {/* <img className='w-[12px]' onClick={()=>handleDelete(item.id)} src={RemoveIcon} /> */}
+                        <p className='cursor-pointer' onClick={()=>handleDelete(item.id)}>X</p>
                         {/* <div onClick={()=>handleDelete(item.id)}>Delete</div> */}
                     </div>
                 ))}

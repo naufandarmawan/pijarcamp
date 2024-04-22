@@ -21,7 +21,7 @@ const Home = () => {
     search: ''
   })
   const [searchInput, setSearchInput] = useState('');
-  const [selectedSort, setSelectedSort] = useState(''); // State for selected sorting option
+  const [selectedSort, setSelectedSort] = useState('');
 
 
   const getTalent = () => {
@@ -30,13 +30,12 @@ const Home = () => {
         limit: params.limit,
         page: params.page,
         ...(params.search ? { search: params.search } : {}),
-        ...(params.sort ? { sort: params.sort } : {}), // Include sort parameter if selected
+        ...(params.sort ? { sort: params.sort } : {}),
         sortBy: params.sortBy,
       }
     })
       .then((res) => {
         const result = res.data.data
-        // console.log(result);
         setTalent(result)
       })
       .catch((err) => {
@@ -74,7 +73,7 @@ const Home = () => {
 
   const handleSearch = () => {
     if (searchInput === '') {
-      setParams({ ...params, search: null }); // or setParams({ ...params, search: null });
+      setParams({ ...params, search: null });
     } else {
       setParams({ ...params, search: searchInput, sort: selectedSort });
     }
@@ -116,6 +115,7 @@ const Home = () => {
                 </select>
                 <Button onClick={handleSearch} variant='primary-purple' text='Search' className="px-[30px] py-[15px] rounded-[4px] font-bold text-sm leading-6 text-white bg-[#5E50A1]">Search</Button>
               </div>
+              
             </div>
 
             <div className="flex flex-col rounded-[8px] overflow-hidden shadow-[0px_1px_20px_0_rgba(197,197,197,0.25)] gap-[1px]">

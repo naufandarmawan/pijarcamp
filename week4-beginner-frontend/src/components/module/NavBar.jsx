@@ -11,6 +11,12 @@ const NavBar = () => {
     const [myProfile, setMyProfile] = useState({})
     const [myRole, setMyRole] = useState('')
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [showPopover, setShowPopover] = useState(false);
+    const [notification, setNotification] = useState([])
+
+    const togglePopover = () => {
+        setShowPopover(!showPopover);
+    };
 
     const handleLogOut = () => {
         api.get(`/auth/logout`)
@@ -24,6 +30,7 @@ const NavBar = () => {
                 console.log(err.response);
             })
     }
+
 
     useEffect(() => {
         const token = localStorage.getItem('token');
@@ -96,6 +103,26 @@ const NavBar = () => {
         //         })
         // }
 
+        if (myRole === 'recruiter') {
+            api.get(`/hire/recruiters`)
+                .then((res) => {
+                    const result = res.data.data
+                    setNotification(result)
+                })
+                .catch((err) => {
+                    console.log(err.response);
+                })
+        } else {
+            api.get(`/hire/workers`)
+                .then((res) => {
+                    const result = res.data.data
+                    setNotification(result)
+                })
+                .catch((err) => {
+                    console.log(err.response);
+                })
+        }
+
     }, [isLoggedIn, myRole])
 
     const navigate = useNavigate()
@@ -127,7 +154,7 @@ const NavBar = () => {
             <div className='container mx-auto flex justify-between items-center'>
                 <div className='flex gap-24 items-center'>
                     <Link to='/'><img className="h-[35px] " src={PurpleLogo} alt="" /></Link>
-                    <Link to='/home' className='font-semibold text-lg leading-7 text-[#1F2A36]'>Home</Link>
+                    <Link to='/talent' className='font-semibold text-lg leading-7 text-[#1F2A36]'>Home</Link>
                 </div>
                 <div className="flex gap-4">
                     <button onClick={handleProfile}
@@ -142,10 +169,25 @@ const NavBar = () => {
         <div className="px-[150px] py-8 bg-white max-lg:p-8">
             <div className='container mx-auto flex justify-between items-center'>
                 <Link to='/'><img className="h-[35px] " src={PurpleLogo} alt="" /></Link>
-                <div className="flex gap-10">
-                    <img src={GreyBell} />
+                <div className="flex gap-10 items-center">
+                    {/* <img src={GreyBell} onClick={togglePopover} /> */}
+                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                        <img src={GreyBell} onClick={togglePopover} />
+                        {/* <button onClick={togglePopover}>Toggle Popover</button> */}
+                        {showPopover && (
+                            <div
+                                className="absolute w-[300px] flex flex-col gap-3 bg-white border border-gray-300 shadow rounded p-4 z-10 top-full mt-2 left-1/2 transform -translate-x-1/2"
+                            >
+                                {notification.map((item) => (
+                                    <div>
+                                        {myRole === 'recruiter' ? `Hi ${item.recruiter_name}, you have successfully sent a message for ${item.worker_name}, a ${item.worker_job_desk} at ${item.worker_workplace} for ${item.message_purpose} opportunity.` : `Hi ${item.worker_name}, you have a new ${item.message_purpose} opportunity from ${item.recruiter_name}, ${item.recruiter_position} at ${item.recruiter_company}. Please check your email for details.`}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                     <img src={GreyMail} />
-                    <img className='h-[32px] rounded-full cursor-pointer' src={myProfile.photo ? myProfile.photo : Person1} onClick={handleProfile} />
+                    <img className='size-[32px] rounded-full cursor-pointer' src={myProfile.photo ? myProfile.photo : Person1} onClick={handleProfile} />
                     <button onClick={handleLogOut}
                         className="px-5 py-[10px] border border-solid border-[#5E50A1] rounded-[4px] font-bold text-sm leading-6 text-white bg-[#5E50A1]">Log Out</button>
                 </div>
