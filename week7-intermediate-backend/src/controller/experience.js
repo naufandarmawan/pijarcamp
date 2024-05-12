@@ -51,8 +51,8 @@ const getMyExperience = async (req, res, next) => {
 
         const { rows } = await selectMyExperience(worker.id)
 
-        const client = await setClient()
-        await client.setEx(`worker/${worker.id}`, 60 * 60, JSON.stringify(rows))
+        // const client = await setClient()
+        // await client.setEx(`worker/${worker.id}`, 60 * 60, JSON.stringify(rows))
 
         response(res, rows, 200, `Experience listed successfully.`)
     } catch (error) {
