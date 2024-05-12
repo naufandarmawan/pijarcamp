@@ -7,10 +7,8 @@ const { uploadCloudinary, deleteCloudinary } = require("../middlewares/cloudinar
 const route = express.Router()
 
 
-
-// /product
 route
   .post('/upload', protect, upload.single('file'), uploadCloudinary, uploadImage)
-  .delete('/delete', protect, deleteCloudinary, deleteImage)
+  .delete('/delete/', protect, deleteCloudinary, deleteImage)
 
 module.exports = route

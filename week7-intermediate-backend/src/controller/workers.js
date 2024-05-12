@@ -181,11 +181,11 @@ const updateMyPhoto = async (req, res, next) => {
 
         // Success
         const data = {
-            local: `${process.env.SITE}/file/` + req.file.filename,
-            cloudinary: req.data.url
+            // local: `${process.env.SITE}/file/` + req.file.filename,
+            file: req.data.url
         }
 
-        await putMyPhoto(data.cloudinary, worker.id)
+        await putMyPhoto(data.file, worker.id)
 
         response(res, data, 200, 'Update my photo success')
     } catch (error) {

@@ -8,8 +8,9 @@ const fs = require('fs');
 const uploadImage = async (req, res, next) => {
     try {
         const data = {
-            localPath: `${process.env.SITE}/file/` + req.file.filename,
-            cloudinaryPath: req.data.url
+            // localPath: `${process.env.SITE}/file/` + req.file.filename,
+            // cloudinaryPath: req.data.url
+            file: req.data.url
         }
 
         response(res, data, 200, `Upload file success`)
@@ -21,22 +22,28 @@ const uploadImage = async (req, res, next) => {
 
 const deleteImage = async (req, res, next) => {
     try {
-        const filePath = req.body.localPath; // Assuming filePath is sent in the request body
-        
-        if (!filePath) {
-            return next(createError(400, 'File path is required'));
+        const {result} = res.deleteStatus
+
+        if (result === "ok") {
+            return response(res, null, 200, `Delete file success`);
         }
+        // // Delete local file
+        // const filePath = req.body.localPath;
 
-        const filename = filePath.split('/').pop();
+        // if (!filePath) {
+        //     return next(createError(400, 'File path is required'));
+        // }
 
-        const actualFilePath = `./uploads/${filename}`;
+        // const filename = filePath.split('/').pop();
 
-        fs.unlink(actualFilePath, (err) => {
-            if (err) {
-                return next(createError(400, `Error deleting file`));
-            }
-            response(res, filePath, 200, `Delete file success`)
-        });
+        // const actualFilePath = `./uploads/${filename}`;
+
+        // fs.unlink(actualFilePath, (err) => {
+        //     if (err) {
+        //         return next(createError(400, `Error deleting file`));
+        //     }
+        //     response(res, filePath, 200, `Delete file success`)
+        // });
 
     } catch (error) {
         next(new createError[500])

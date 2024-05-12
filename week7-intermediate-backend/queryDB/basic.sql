@@ -200,6 +200,9 @@ ADD verification_token VARCHAR(255);
 
 ALTER TABLE users ALTER COLUMN verification_token TYPE varchar(800)
 
+ALTER TYPE user_role RENAME VALUE 'worker' TO 'Worker';
+ALTER TYPE user_role RENAME VALUE 'recruiter' TO 'Recruiter';
+
 -- -- -- -- --
 
 
